@@ -1,0 +1,23 @@
+miscellaneous = {
+		"fire": {
+				"description": "",
+				"discovered" : "TRUE",
+				"value"     : 0,
+				"unlockReqs" :{
+						"resources" : {
+						},
+						"buildings" : {
+
+						},
+						"population" : {
+
+						}
+				}
+		}
+
+
+
+
+
+
+}

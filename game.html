@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- sweet royalty free icon -->
+		<link rel="shortcut icon" href="images/pickaxe_icon.png" type="image/x-icon">
+
+		<!-- css stuff -->
+		<link rel="stylesheet" type="text/css" href="res/main_style.css" /> 
+		<link rel="stylesheet" type="text/css" href="res/tab.css" />
+				<link rel="stylesheet" type="text/css" href="res/fire.css" /> 
+		
+		<!-- json stuff  -->
+		<script type="text/javascript" src="resources.json"></script>
+		<script type="text/javascript" src="population.json"></script>
+		<script type="text/javascript" src="misc.json"></script>
+		<script type="text/javascript" src="events.js"></script>
+
+
+		<!-- javascript stuff -->
+		<script type="text/javascript" src="buildings.js"></script>
+		<script type="text/javascript" src="calendar.js"></script>
+		<script type="text/javascript" src="fire.js"></script>
+		<script type="text/javascript" src="main.js"></script>
+
+
+
+		<!-- jquery stuff -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="jquery_functions.js"></script>
+
+
+	<style>
+  label {
+    display: inline-block;
+    width: 5em;
+  }
+  </style>
+
+
+	<title>Citadel</title>
+	</head>
+	<body onload="mainLoop()">
+		<!-- resources and population -->
+		<div class="row">
+			<div class="column left" style="background-color:#aaa;">
+				<div id="Date" style="text-align:center;padding: 5px">
+					<table style="width:100%;table-layout:fixed;" id="DateTable"></table>
+				</div>
+				<div class="tab">
+					<button id="ResourcesTab"  class="lefttablinks active" style="width:100%;" onclick="switchLeftTabs(event, 'Resources')">Resources</button>
+					<button id="PopulationTab" class="lefttablinks" style="width:0%;display:none;" onclick="switchLeftTabs(event, 'Population')">Population</button>
+				</div>
+				
+				<div id="Resources" class="lefttabcontent" style="display:block">
+					<table style="width:100%;table-layout:fixed;" id="resourceTable"></table>
+				</div>
+
+				<div id="Population" class="lefttabcontent" >
+					<table style="width:100%;table-layout:fixed;" id="populationTable"></table>
+				</div>
+
+
+				
+				<!-- literally everything else -->
+			</div>
+			<div class="column right">
+				<div class="tab">
+					<button class="righttablinks active" onclick="switchRightTabs(event, 'Base')">A Small Clearing</button>
+					<button id="BuildingsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Buildings')">Buildings</button>
+					<button id="JobsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Jobs')">Jobs</button>
+					<button id="ScienceButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, Science')">Science</button>
+					<button id="LogButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Log')">Log</button>
+				</div>
+				
+				<div id="Base" class="righttabcontent" style="display:block">
+
+					<div id="MessageBox" class="messagebox">You stand in a small clearing.</div>
+					
+
+					<div style="width:100%">
+						<div style="width: max-content;height=max-content;display:none;" id="Fire" title="<div style='text-align:center'> Build a small fire.</div>">
+ 							<button id="FireButton"  type="button" class="button" onclick="fireButton()">Build a fire</button>
+						</div>
+						
+						<div style="width: max-content;height=max-content;display:inline-block;position:absolute;" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood: 1">
+ 							<button  type="button" class="button" onclick="resourceButton('wood')">Gather wood</button>
+						</div>
+					</div>
+				</div>
+
+				<div id="Buildings" class="righttabcontent" style="display:none">
+				</div>
+				
+				<div id="Jobs" class="righttabcontent" style="display:none">
+				</div>
+
+				
+				<div id="Science" class="righttabcontent" style="display:none">
+				</div>
+
+				
+				<div id="Log" class="righttabcontent" style="display:none">
+
+				</div>
+				
+
+				
+			</div>
+		</div>		
+
+
+	</body>
+</html>

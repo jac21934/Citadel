@@ -1,0 +1,91 @@
+
+body {
+		margin: 0;
+		font-family: Arial, Helvetica, sans-serif;
+	  background-color:  #403F3D;
+}
+
+
+ul {
+    list-style-type: none;
+		text-align: left;
+		margin: 0;
+		padding: 0;
+
+}
+
+.messagebox{
+    /* display: none; */
+    padding: 6px 12px;
+    border: none; /* 1px solid #ccc; */
+		color: white;
+		font-size: 16px;
+		text-align: center;
+    /* border-top: none; */
+}
+
+		
+
+.button {
+    background-color: #555555;
+		margin: 5px;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    outline: none;
+		width: 150px;
+		height: 80px;
+		
+}
+
+
+.button:active{
+    background-color: #455555;
+
+}
+
+
+
+.button_tooltip{
+    background-color: #555555 !important;
+    color: white !important;
+		max-width: 150px !important;
+    width: 150px !important;
+		text-align: left !important;
+		font-size: small !important;
+}
+
+.building{
+
+
+}
+
+.column {
+    float: left;
+    padding: 10px;
+    box-sizing: border-box;
+		height:100%;
+}
+
+.left {
+		width: 20%;
+}
+
+.right {
+		width: 80%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+.disallowed{
+    color: grey;
+}

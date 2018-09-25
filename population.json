@@ -1,0 +1,45 @@
+var population = {
+		"human" : {
+				"plural" : "humans",
+				"value" : 0,
+				"resourceCap" : 0,
+				"discovered": "FALSE",
+				"needs"  : {
+						"food" : 1
+				},
+				"unlockReqs" :{
+						"resources" : {
+
+						},
+						"buildings" : {
+								"cabin" : 1
+						},
+						"population" : {
+
+						}
+				}
+
+		},
+		"dwarf" : {
+				"plural" : "dwarves",
+				"value" : 0,
+				"resourceCap" : 0,
+				"discovered": "FALSE",
+				"needs"  : {
+						"beer" : 1
+				},
+				"unlockReqs" :{
+						"resources" : {
+								"beer" : 1
+						},
+						"buildings" : {
+						},
+						"population" : {
+								
+						}
+				}
+
+		}
+
+		
+}

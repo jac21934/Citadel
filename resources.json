@@ -1,0 +1,99 @@
+var resources = {
+		"food" : {
+				"value" : 0,
+				"resourceCap" : 100,
+				"rate" : 0.0,
+				"rateUnits" : "s",
+				"discovered" : "FALSE",
+				"unlockReqs" :{
+						"resources" : {
+
+						},
+						"buildings" : {
+								"farm": 1
+						},
+						"population" : {
+
+						}
+				}										
+		},
+		"beer" : {
+				"value" : 0,
+				"resourceCap" : 100,
+				"rate" : 0.0,
+				"rateUnits" : "s",
+				"discovered" : "FALSE",
+				"unlockReqs" :{
+						"resources" : {
+
+						},
+						"buildings" : {
+								"brewery": 1
+						},
+						"population" : {
+
+						}
+				}										
+		},
+
+
+
+
+		
+		"wood" : {
+				"value" : 0,
+				"resourceCap" : 100,
+				"rate" : 0.0,
+				"rateUnits" : "s",
+				"discovered" : "TRUE",
+				"unlockReqs" :{
+						"resources" : {
+						},
+						"buildings" : {
+
+						},
+						"population" : {
+
+						}
+
+				}
+		},
+		
+		"stone" : {
+				"value" : 0,
+				"resourceCap" : 100,
+				"rate" : 0.0,
+				"rateUnits" : "s",
+				"discovered" : "FALSE",
+				"unlockReqs" :{
+						"resources" : {
+
+						},
+						"buildings" : {
+								"mine" : 1
+						},
+						"population" : {
+						}
+				}
+
+		},
+		"iron" : {
+				"value" : 0,
+				"resourceCap" : 100,
+				"rate" : 0.0,
+				"rateUnits" : "s",
+				"discovered" : "FALSE",
+				"unlockReqs" :{
+						"resources" : {
+								
+						},
+						"buildings" : {
+								"mine" : 1
+						},
+						"population" : {
+								
+						}
+				}				
+		},
+		
+}

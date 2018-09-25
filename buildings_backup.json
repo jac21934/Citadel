@@ -1,0 +1,25 @@
+var buildings = {
+		"farm": {
+				"description": "",
+				"discovered" : "FALSE",
+				"value"     : 0,
+				"resource": "food",
+				"rateIncrease" : {
+						"food" : 1,
+				},
+				"cost" : {
+						"wood" : 50,
+				},
+				"unlockReqs" :{
+						"resources" : {
+								"wood": 25
+						},
+						"buildings" : {
+
+						},
+						"population" : {
+
+						}
+				}
+		}
+}
