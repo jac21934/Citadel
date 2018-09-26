@@ -1,3 +1,16 @@
+var fireObj = {
+
+
+
+
+}
+
+
+
+
+
+
+
 var fireOn = false;
 var fireUnlocked = false;
 

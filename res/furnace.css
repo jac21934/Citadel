@@ -1,0 +1,23 @@
+.furnaceBar {
+		/* width: 100%; */
+		height: auto;
+		overflow: hidden;
+		/* float: left; */
+		background-color: #555555;
+}
+
+.furnaceProgress {
+		overflow:hidden;
+		height:100%;
+		width: 0%;
+		/* background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%); */
+		
+		background-color: #4CAF50;
+}
+
+
+.furnaceDisabled {
+
+		background-color: #d81904;
+}
+

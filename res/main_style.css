@@ -37,12 +37,73 @@ ul {
     display: inline-block;
     font-size: 16px;
     outline: none;
-		width: 150px;
+		width: 152px;
 		height: 80px;
 		
 }
 
 
+.left_button {
+		/* text-decoration: none; */
+    background-color: #555555;
+    /* outline: none; */
+    /* border: none; */
+		color: white;
+
+
+		/* border-right:solid; */
+		display:inline-block;
+		margin:auto;
+		float:left;
+		padding: 0px 5px;
+
+
+}
+
+
+
+
+.right_button {
+		/* text-decoration: none; */
+    background-color: #555555;
+    /* outline: none; */
+    /* border: none; */
+		color: white;
+
+
+		/* border-right:solid; */
+		display:inline-block;
+		margin:auto;
+		float:right;
+		padding: 0px 5px;
+
+
+}
+
+
+.left_button:active{
+    background-color: #455555;
+
+}
+
+
+.right_button:active{
+    background-color: #455555;
+
+}
+
+
+.small_button {
+    background-color: #555555;
+    color: white;
+    text-align: center;
+
+    display: inline-block;
+
+		width: auto;
+		height: auto;
+
+}
 .button:active{
     background-color: #455555;
 
@@ -55,6 +116,8 @@ ul {
     color: white !important;
 		max-width: 150px !important;
     width: 150px !important;
+		/* padding: 15px 32px; */
+
 		text-align: left !important;
 		font-size: small !important;
 }
@@ -89,3 +152,6 @@ ul {
 .disallowed{
     color: grey;
 }
+
+
+
