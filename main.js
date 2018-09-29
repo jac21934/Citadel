@@ -115,46 +115,8 @@ function manageUnlocks(){
 }		
 
 
+pops = [];
 
-function displayPopulation(){
-		var text = "";
-
-		if(!displayPop){
-				var numPop = 0;
-				for( var key in population){
-						numPop += population[key]["resourceCap"];
-				}
-				if(numPop > 0){
-						displayPop = true;
-						document.getElementById("ResourcesTab").style.width = "50%";
-						document.getElementById("PopulationTab").style.display = "block";
-						document.getElementById("PopulationTab").style.width = "50%";
-
-						
-				}
-		}
-
-		
-		
-		for( var key in population){
-				if( population[key]["discovered"] == "TRUE"
-						&& population[key]["resourceCap"] > 0
-					){
-
-						var value =  population[key]["value"];
-						value = Math.floor(value);
-						
-						text += "<tr>";
-						text += "<td>" + key.replace(/^\w/, c => c.toUpperCase()) + "</td>";
-						text += "<td>" + value  + "</td>";
-						text += "<td>/" +  population[key]["resourceCap"] + "</td>";
-						text += "</tr>";
-				}
-		}
-
-		document.getElementById("populationTable").innerHTML = text;
-
-}
 
 
 
@@ -239,8 +201,15 @@ function getDefaultMessage(){
 
 function updateLog(message){
 
-		var logText = "<p>[Year " + getYear() + ", " + getMonth() + " " + getDay() + "] " + message + "</p>";
+		var logText = "<tr>";
 
+
+		
+		logText += "<td style=\"vertical-align: top;text-align:text-top\" width=\"15%\">[Year " + getYear() + ", " + getMonth() + " " + getDay() + "]</td> ";
+		logText += "<td width=\"85%\">" +  message + "</td>";
+
+		logText += "</tr>";
+		logText += "<tr></tr>";
 
 
 		document.getElementById("LogContent").innerHTML = logText + document.getElementById("LogContent").innerHTML;
@@ -254,10 +223,15 @@ function mainLoop() {
 
 		timestep = 10;  // actual number of miliseconds the function repeats in
 		gameTimeRate = 2.5; // the rate at which ingame time flows, 2.5 felt right, might change later...
+		manageUnlocks();
+
+		
+		displayResources();
+		displayPopulation();
 
 		
 		manageDate(gameTimeRate);
-		manageUnlocks();
+
 		
 		manageResources(timestep);
 		
@@ -269,8 +243,6 @@ function mainLoop() {
 		managePopulation(timestep);
 		
 		
-		displayResources();
-		displayPopulation();
 
 		
 		manageBuildingConsumption(timestep);

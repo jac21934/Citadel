@@ -83,7 +83,7 @@
 				
 				<div id="Base" class="righttabcontent" style="display:block">
 
-					<div id="MessageBox" class="messagebox">You stand in a small clearing.</div>
+					<div id="MessageBox" class="messagebox"> It's been a long time since you started wandering. Too long in some ways. Not long enough in others. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east. <br> <br> It'll do. </div>
 					
 
 					<div style="width:100%">
@@ -91,9 +91,15 @@
  							<button id="FireButton"  type="button" class="button" onclick="fireButton()">Build a fire</button>
 						</div>
 						
-						<div style="width:fit-content;display:inline-block;position:absolute;margin:5px;" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood: 1">
+						<div style="width:fit-content;vertical-align:top;display:inline-block;margin:5px;" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood: 1">
  							<button  type="button" class="button" onclick="resourceButton('wood')">Gather wood</button>
 						</div>
+
+						<div style="width:fit-content;vertical-align:top;display:inline-block;margin:5px;" title="<div style='text-align:center'> So much has changed.<br><br> The stars aren't where they used to be. Maybe you can find them again.</div> <hr>">
+ 							<button  type="button" class="button">Watch the stars</button>
+						</div>
+
+						
 					</div>
 				</div>
 
@@ -110,10 +116,11 @@
 				
 				<div id="Log" class="righttabcontent" style="display:none">
 
-					<div style="text-align:center;color:white" > Records of the past <br> <hr> <div>
-					<div id="LogContent" style="color:white;text-align:left;">
+					<div style="text-align:center;color:white;width:100%;table-layout:fixed;" > Records of the past <br> <hr> <div>
+							
+					<table  id="LogContent" style="color:white;text-align:left;"> 
 						
-					</div>
+					</table>
 
 				</div>
 				
