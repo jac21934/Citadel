@@ -1,5 +1,5 @@
+var DAYS_IN_MONTH = 25;
 
-var DAYS_IN_YEAR = 325;
 
 
 
@@ -7,6 +7,8 @@ var day = 0;
 var year = 0;
 
 function manageDate(rate){
+
+		var DAYS_IN_YEAR = DAYS_IN_MONTH * months.length;
 		rate /= 1000;
 		day += rate;
 		if(	day > DAYS_IN_YEAR){ 
@@ -14,7 +16,7 @@ function manageDate(rate){
 				year += 1;
 				day = day % DAYS_IN_YEAR;
 		}
-		var month = months[Math.floor(day/25)];		
+		var month = months[Math.floor(day/DAYS_IN_MONTH)];		
 
 		var dateText = "<tr>";
 		dateText += "<td style=\"text-align:left\">";
@@ -22,7 +24,7 @@ function manageDate(rate){
 		dateText += "</td>";
 		
 		dateText += "<td style=\"text-align:right\">";
-		dateText += month + " " + ( Math.floor(day) % 25 + 1);
+		dateText += month + " " + ( Math.floor(day) % DAYS_IN_MONTH + 1);
 		dateText += "</td>";
 
 
@@ -34,6 +36,19 @@ function manageDate(rate){
 		
 }
 
+function getYear(){
+
+		return year;
+}
+
+function getMonth() {
+		return		months[Math.floor(day/DAYS_IN_MONTH)];
+}
+
+function getDay(){
+
+		return ( Math.floor(day) % DAYS_IN_MONTH + 1);
+}
 
 var months = [
 		"Ossuary",
@@ -42,7 +57,7 @@ var months = [
 		"Fovos",
 		"Caedes",
 		"Gula",
-		"Cruor",										// Needs name
+		"Cruor",
 		"Tectum",
 		"Pestis",
 		"Macellum",

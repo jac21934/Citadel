@@ -14,7 +14,6 @@
 		
 		<!-- json stuff  -->
 		<script type="text/javascript" src="resources.json"></script>
-		<script type="text/javascript" src="resources.js"></script>
 		<script type="text/javascript" src="population.json"></script>
 		<script type="text/javascript" src="misc.json"></script>
 		<script type="text/javascript" src="buildings.json"></script>
@@ -23,7 +22,8 @@
 
 
 		<!-- javascript stuff -->
-
+		<script type="text/javascript" src="population.js"></script>
+		<script type="text/javascript" src="resources.js"></script>
 		<script type="text/javascript" src="buildings.js"></script>
 		<script type="text/javascript" src="calendar.js"></script>
 		<script type="text/javascript" src="fire.js"></script>
@@ -31,7 +31,7 @@
 
 
 
-		<!-- jquery stuff -->
+		<!-- jquery stuff for those sweet sweet tooltips -->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -77,8 +77,8 @@
 					<button class="righttablinks active" onclick="switchRightTabs(event, 'Base')">A Small Clearing</button>
 					<button id="BuildingsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Buildings')">Buildings</button>
 					<button id="JobsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Jobs')">Jobs</button>
-					<button id="ScienceButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, Science')">Science</button>
-					<button id="LogButton" class="righttablinks"  onclick="switchRightTabs(event, 'Log')">Log</button>
+					<button id="ScienceButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Science')">Science</button>
+					<button id="LogButton" class="righttablinks"   onclick="switchRightTabs(event, 'Log')">Log</button>
 				</div>
 				
 				<div id="Base" class="righttabcontent" style="display:block">
@@ -87,11 +87,11 @@
 					
 
 					<div style="width:100%">
-						<div style="width: max-content;display:none;" id="Fire" title="<div style='text-align:center'> Build a small fire.</div>">
+						<div style="width: max-content;display:none;margin:5px;" id="Fire" title="<div style='text-align:center'> Build a small fire.</div>">
  							<button id="FireButton"  type="button" class="button" onclick="fireButton()">Build a fire</button>
 						</div>
 						
-						<div style="width:fit-content;display:inline-block;position:absolute;" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood: 1">
+						<div style="width:fit-content;display:inline-block;position:absolute;margin:5px;" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood: 1">
  							<button  type="button" class="button" onclick="resourceButton('wood')">Gather wood</button>
 						</div>
 					</div>
@@ -109,21 +109,12 @@
 
 				
 				<div id="Log" class="righttabcontent" style="display:none">
-					<div style="width:fit-content;display:inline-block;" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood: 1">
- 						<button  type="button" style="height:60px;position:relative;margin:0;text-align:center" class="button" onclick="resourceButton('wood')"><div>Wood</div>
 
-
-
-						</button>
-						<div style="height:20px;color:white;border-style:solid;bottom:0;left:0;right:0; background-color: #555555">
-							<button class="left_button" onclick="furnaceButton('test', -1)" >-</button>
-							<button class="right_button" onclick="furnaceButton('test', 1)">+</button>
-							<div id="testFurnaceBar" class="furnaceBar "  style="overflow:hidden;text-align:center;position:relative">
-								<div id="testPogressBar" class="furnaceProgress">  </div>
-								<div style="position:absolute;display:inline-block">Hello </div>
-							</div>
-						</div>
+					<div style="text-align:center;color:white" > Records of the past <br> <hr> <div>
+					<div id="LogContent" style="color:white;text-align:left;">
+						
 					</div>
+
 				</div>
 				
 

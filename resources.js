@@ -13,12 +13,10 @@ function manageResources(timeSteps){
 		for( var key in resources){
 				if( resources[key]["discovered"] == "TRUE"){
 						var toAdd = 0;
-						for( newKey in resources[key]["rate"]){
-								toAdd += resources[key]["rate"][newKey];
-								
-						}
-						resources[key]["rateValue"] = toAdd;
-						
+
+						calcRateValue(key);
+
+						toAdd = resources[key]["rateValue"];
 						toAdd *= timeStepsToSeconds;
 						
 						addToResource(key, toAdd);
@@ -29,6 +27,21 @@ function manageResources(timeSteps){
 
 }
 
+function calcRateValue(key){
+		var toAdd = 0;
+		for( newKey in resources[key]["rate"]){
+				if(newKey in buildings){
+						if(buildings[newKey]["disabled"] == "TRUE"
+							){
+								continue;
+						}
+				}
+														toAdd += resources[key]["rate"][newKey];
+		}
+				
+				resources[key]["rateValue"] = toAdd;
+
+}
 
 
 function addToResourceRate(resourceKey, buildingKey, rate){
@@ -40,6 +53,7 @@ function addToResourceRate(resourceKey, buildingKey, rate){
 		else{
 				resObj["rate"][buildingKey] += rate;
 		}
+		calcRateValue(resourceKey);
 }
 
 
@@ -47,7 +61,28 @@ function setResourceRate(resourceKey, buildingKey, rate){
 
 		resObj = resources[resourceKey];
 		resObj["rate"][buildingKey] = rate;
+		calcRateValue(resourceKey);
 }
+
+function calcAndSetResourceRate(resourceKey, buildingKey){
+		var rateToSet = 0;
+		var amountActive = buildings[buildingKey]["value"];
+		if("consumes" in buildings[buildingKey]){
+				amountActive = buildings[buildingKey]["amount_active"];
+				if (resourceKey in buildings[buildingKey]["consumes"]){
+						rateToSet = -1* buildings[buildingKey]["consumes"][resourceKey]["value"];
+				}
+
+		}
+
+		if( resourceKey in buildings[buildingKey]["rateIncrease"]){
+				rateToSet =  buildings[buildingKey]["rateIncrease"][resourceKey]["value"];
+		}
+		
+		rateToSet *= amountActive;
+		setResourceRate(resourceKey, buildingKey, rateToSet);
+}
+
 
 
 

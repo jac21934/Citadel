@@ -21,135 +21,57 @@ function clamp(num, min, max){
 
 
 
-var numActive = 0;
+function getActiveFurnaceFraction(key){
+
+		if( !("consumes" in buildings[key])){
+				return 1;
+		}
+
+		return  buildings[key]["amount_active"]/ buildings[key]["value"];
+
+}
+
+
+function setFurnaceBar(key){
+
+		var percentage = clamp( (getActiveFurnaceFraction(key) * 100), 0, 100);
+		
+		var barID = key + "BarID";
+
+		document.getElementById(barID).style.width = percentage + "%";
+}
 
 function furnaceButton(key, value){
 
-		var numFurnace = 10;
+		buildings[key]["amount_active"] = clamp( (buildings[key]["amount_active"] + value), 0, buildings[key]["value"]);
+		setFurnaceBar(key);
+		for( var resourceKey in buildings[key]["consumes"]){
+				calcAndSetResourceRate(resourceKey, key);
 
-		numActive = clamp( (numActive + value), 0, numFurnace);
-		var percentage = numActive/numFurnace * 100;
-
-		document.getElementById("testPogressBar").style.width = percentage + "%";
-
-
-}
-
-
-
-function checkConsumption(obj, timestep){
-		var timescale = timestep/1000;
-		if(obj["value"] <= 0){
-				return;
 		}
-		if( "consumes" in obj ){
+		for( var resourceKey in buildings[key]["rateIncrease"]){
+				calcAndSetResourceRate(resourceKey, key);
 
-				if( !("disabled" in obj)){
-						obj["disabled"] = "FALSE";
-				}
-
-
-				if(obj["disabled"] == "FALSE"){
-						for(var key in obj["consumes"]){
-								var rate = obj["consumes"][key]["value"] * obj["value"] * timescale; 
-								if(resource[key]["value"] - rate < 0){
-								}
-						}
-				}
-		}
-}
-
-
-
-
-
-function manageBuildingRates(key){
-
-		var obj = buildings[key];
-		var amount = 0;
-
-		if( "consumes" in obj){
-
-				amount = obj["amount_active"];
-		}
-		else{
-				amount = obj["value"];
 		}
 
 
-		for(var resourceKey in obj["rateIncrease"]){
+		document.getElementById(key).innerHTML = getNameText(key);
 
-				//remove all building effects
-				if( key in resource[resourceKey]["effectedBy"]){
-						resources[resourceKey]["rate"] -= obj["rateIncrease"][resourceKey] * amount; 
-				}
-
-				//if not disabled add new effects
-				if(obj["disabled"] == "FALSE"){
-						
-				}
-		}
-}
-
-function manageBuildingConsumption(rate){
-
-		timeStep = rate/1000;
 		
-		for( var key in buildings){
+}
 
-				
-				if("consumes" in buildings[key]){
-						if( buildings[key]["value"] > 0
-								&& buildings[key]["disabled"] == "FALSE"){
-								console.log(key);
-								var disabled = "FALSE";
-								for( var resourceID in buildings[key]["consumes"]){
-										var nextDecr = buildings[key]["value"] *buildings[key]["consumes"][resourceID]["value"] * timeStep;
-										if(resources[resourceID]["value"] - nextDecr  <= 0){
+function disableFurnace(key){
 
-												disabled = "TRUE";
-												
-										}
-										
-								}
-								if(disabled ==  "TRUE"){
-										for( var resourceID in buildings[key]["consumes"]){
-												resources[resourceID]["rate"] += buildings[key]["value"] *buildings[key]["consumes"][resourceID]["value"];
-										}
-										for( var resourceID in buildings[key]["rateIncrease"] ){
-												resources[resourceID]["rate"] -= buildings[key]["value"] *buildings[key]["rateIncrease"][resourceID]["value"];
-										}
-								}
+		var barID = key + "BarID";
+		console.log("here");
+		document.getElementById(barID).className += " furnaceDisabled";
 
-								buildings[key]["disabled"] = disabled;
-								continue;
-						}
-						if(buildings[key]["disabled"] == "TRUE"){
-								var disabled = "TRUE";
-								for( var resourceID in buildings[key]["consumes"]){
-										var nextDecr = buildings[key]["value"] *buildings[key]["consumes"][resourceID]["value"] * timeStep;
-										if(resources[resourceID]["value"] - nextDecr  >= 0){
+}
 
-												disabled = "FALSE";
-												
-										}
-										
-								}
+function enableFurnace(key){
+		var barID = key + "BarID";
 
-								if(disabled ==  "FALSE"){
-										for( var resourceID in buildings[key]["consumes"]){
-												resources[resourceID]["rate"] -= buildings[key]["value"] *buildings[key]["consumes"][resourceID]["value"];
-										}
-										for( var resourceID in buildings[key]["rateIncrease"] ){
-												resources[resourceID]["rate"] += buildings[key]["value"] *buildings[key]["rateIncrease"][resourceID]["value"];
-										}
-								}
-								
-								
-						}
-				}
-				
-		}
+		document.getElementById(barID).className = document.getElementById(barID).className.replace(" furnaceDisabled", "");
 
 }
 
@@ -279,6 +201,7 @@ function manageEvents(){
 							 && events[key]["shown"] == "FALSE"
 							){
 								currentEvent = events[key];
+								updateLog(document.getElementById("MessageBox").innerHTML);
 								document.getElementById("MessageBox").innerHTML = currentEvent["message"];
 								currentEvent.misc();
 						}
@@ -298,6 +221,7 @@ function manageEvents(){
 				currentEvent["shown"] = shown;
 				if(shown == "TRUE"){
 						var message = getDefaultMessage();
+						updateLog(document.getElementById("MessageBox").innerHTML);
 						document.getElementById("MessageBox").innerHTML = message;
 						currentEvent = "none";
 						
@@ -313,21 +237,42 @@ function getDefaultMessage(){
 
 
 
+function updateLog(message){
+
+		var logText = "<p>[Year " + getYear() + ", " + getMonth() + " " + getDay() + "] " + message + "</p>";
+
+
+
+		document.getElementById("LogContent").innerHTML = logText + document.getElementById("LogContent").innerHTML;
+
+}
+
 
 
 function mainLoop() {
 
-		timestep = 10;
+
+		timestep = 10;  // actual number of miliseconds the function repeats in
+		gameTimeRate = 2.5; // the rate at which ingame time flows, 2.5 felt right, might change later...
+
+		
+		manageDate(gameTimeRate);
+		manageUnlocks();
 		
 		manageResources(timestep);
 		
-		manageDate(2.5);
 		manageBuildingButtons();
-		displayResources();
-		displayPopulation();
-		manageUnlocks();
 		manageEvents();
 		manageFire();
-//		manageBuildingConsumption(timestep);
+
+
+		managePopulation(timestep);
+		
+		
+		displayResources();
+		displayPopulation();
+
+		
+		manageBuildingConsumption(timestep);
 		window.setTimeout("mainLoop()", timestep);
 }

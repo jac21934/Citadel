@@ -2,10 +2,18 @@ var buildingButtons = [];
 
 function buildingButton(key){
 		buildings[key]["value"] += 1;
-		if( "consumes" in buildings[key]
-				&& buildings[key]["disabled"] == "FALSE")
-		{
-				buildings[key]["amount_active"] += 1;
+		if( "consumes" in buildings[key]){
+				if(buildings[key]["disabled"] == "FALSE"
+					 && (buildings[key]["amount_active"] + 1) == buildings[key]["value"]
+					)	{
+						buildings[key]["amount_active"] += 1;
+						setFurnaceBar(key);
+				}
+				
+				if(buildings[key]["value"] == 1){
+						//						document.getElementById( key + "BarID").style.width = "100%";
+						setFurnaceBar(key);
+				}
 
 		}
 		console.log("Added " + key);
@@ -68,7 +76,7 @@ function getNameText(key){
 		nameText += ' (';
 		
 		if("consumes" in buildings[key]){
-				numActive = buildings[key]["amount_active"];
+				var numActive = buildings[key]["amount_active"];
 				nameText += numActive + "/";
 		}
 		
@@ -172,7 +180,7 @@ function getNormalBuildingText(key){
 		var descriptionText = getDescriptionText("buildings", key);
 		var keyID = key + "ID";
 		
-		text += "<div id=\'" + keyID + "\'  tabindex='0'  style='    vertical-align: top;highlight:none;width:fit-content;display:inline-block;'  title=";
+		text += "<div id=\'" + keyID + "\'  tabindex='0'  style='margin:5px;vertical-align: top;highlight:none;width:fit-content;display:inline-block;'  title=";
 		text += '\"' + descriptionText + '\" >';
 		
 		text += '<button id="';
@@ -193,9 +201,50 @@ function getNormalBuildingText(key){
 }
 
 
+function getConsumingBuildingText(key){
+
+		var text = "";
+		
+		var descriptionText = getDescriptionText("buildings", key);
+		var keyID = key + "ID";
+		var barID = key + "BarID";
+		
+		text += "<div id=\'" + keyID + "\'  tabindex='0'  style='height=80px;margin:5px;verticle-align:top;highlight:none;width:fit-content;display:inline-block;'  title=";
+		text += '\"' + descriptionText + '\" >';
+		
+		text += '<button id="';
+		text += key;
+		text+= '" type="button" class="button building disallowed"';
+		text += ' onclick="buildingButton(\'' + key + '\')"';
+		
+		text += " style='pointer-events: none; height:60px;position:relative;margin:0;'";
+		text += " disabled";
+		text +=">";
+		text += key.replace(/^\w/, c => c.toUpperCase());
+		text += '</button>';
+
+		text += '<div style=\"height:20px;color:white;border-style:solid;bottom:0;left:0;right:0; background-color: #555555\">';
+		text += '	<button class=\"left_button\" onclick=\"furnaceButton(\'' +  key  +'\', -1)\" >-</button>';
+		text += '	<button class=\"right_button\" onclick=\"furnaceButton(\'' + key + '\', 1)\">+</button>';
+		text += '	<div id=\"testFurnaceBar\" class=\"furnaceBar \"  style=\"overflow:hidden;text-align:center;position:relative\">';
+		text += '	  <div id=\"' + barID + '\" class=\"furnaceProgress\">  </div>';
+		text += '	  <div style=\"position:absolute;display:inline-block\">Hello </div>';
+		text += ' </div>';
+		text += '</div>';
+
+		
+		text += "</div>";
+
+		return text;
+
+
+
+
+}
+
 
 function manageBuildingButtons(){
-		var text = "";
+ 		var text = "";
 
 
 		for (var key in buildings){
@@ -208,9 +257,12 @@ function manageBuildingButtons(){
 
 						}
 						buildingButtons.push(key);
-
-						text += getNormalBuildingText(key);
-
+						if( "consumes" in buildings[key]){
+								text += getConsumingBuildingText(key);
+						}
+						else{
+								text += getNormalBuildingText(key);
+						}
 						
 				}
 				
@@ -248,6 +300,7 @@ function checkBuildingButtons(){
 								buttons[i].style.pointerEvents = "none";								
 						}
 				}
+				
 		}
 }
 
@@ -263,6 +316,159 @@ function checkBuildingCost(key){
 		}
 
 		return canBuild;
+
+}
+
+
+
+function disableBuildingReason(key, reason){
+		console.log(reason);
+		disableBuilding(key);
+		if( reason == "consumptionLimited"){
+				buildings[key]["consumptionLimited"] = "TRUE";
+
+				disableFurnace(key);
+		}
+		if( reason == "resourceCapLimited"){
+				buildings[key]["resourceCapLimited"] = "TRUE";
+		}
+}
+
+
+function disableBuilding(key){
+
+		if( buildings[key]["disabled"] == "TRUE"){
+				return;
+		}
+		for(var resourceKey in buildings[key]["rateIncrease"]){
+		//		if( key in resources[resourceKey]["rate"]){
+				setResourceRate(resourceKey, key, 0.0);
+		//		}
+		}
+		if( "consumes" in buildings[key]){
+				for(var resourceKey in buildings[key]["consumes"]){
+		//				if( key in resources[resourceKey]["rate"]){
+						setResourceRate(resourceKey, key, 0.0);
+		//				}
+				}
+		}
+		buildings[key]["disabled"] = "TRUE";
+
+
+}
+
+
+function enableBuilding(key){
+
+		if( buildings[key]["disabled"] == "FALSE"){
+				return;
+		}
+		else{
+				
+				for(var resourceKey in buildings[key]["rateIncrease"]){
+						console.log("adding rate for " + resourceKey); 
+						calcAndSetResourceRate(resourceKey, key);						
+						console.log("rate for " + resourceKey + " added"); 
+				}
+				for(var resourceKey in buildings[key]["consumes"]){
+						console.log("adding consumption of " + resourceKey); 
+						calcAndSetResourceRate(resourceKey, key);
+						console.log("consumption of " + resourceKey + " added"); 
+				}
+
+				if("consumes" in buildings[key]){
+						enableFurnace(key);
+						buildings[key]["consumptionlimited"] = "FALSE";
+						buildings[key]["resourceCaplimited"] = "FALSE";
+						
+						buildings[key]["disabled"] = "FALSE";
+				}
+		}
+		
+}
+
+
+function getBuildingResourceRate(buildingKey, resourceKey){
+		var amount = buildings[buildingKey]["value"];
+
+		if("consumes" in buildings[buildingKey]){
+				amount = buildings[buildingKey]["amount_active"];
+				if(resourceKey in buildings[buildingKey]["consumes"]){
+						console.log(buildings[buildingKey]["consumes"][resourceKey]["value"]);
+						return buildings[buildingKey]["consumes"][resourceKey]["value"] * amount;
+				}
+		}
+
+		if(resourceKey in buildings[buildingKey]["rateIncrease"]){
+				return buildings[buildingKey]["rateIncrease"][resourceKey]["value"] * amount;
+		}
+
+
+
+		return 0;
+					 
+}
+
+function manageBuildingConsumption(rate){
+		timeStep = rate/1000;
+
+		for( var buildingKey in buildings){
+				if( !("consumes" in buildings[buildingKey] )           	// only care about buildings that take resources
+						|| buildings[buildingKey]["value"] <= 0				      // and exist
+						|| buildings[buildingKey]["discovered"] == "FALSE"  // and have been discovered
+					){
+						continue;
+				}
+
+				var disabled = "FALSE";
+				var reason = "";
+
+				for( var resourceKey in buildings[buildingKey]["rateIncrease"]){
+
+						if( resources[resourceKey]["value"] == resources[resourceKey]["resourceCap"]){
+										reason = "resourceCapLimited";
+						}
+
+				}
+
+				
+				for( var resourceKey in buildings[buildingKey]["consumes"]){
+						var nextTimeStepDecrease = getBuildingResourceRate(buildingKey, resourceKey);
+
+						if(buildings[buildingKey]["disabled"] == "TRUE"){
+								if(resources[resourceKey]["value"] - nextTimeStepDecrease < 0){
+										reason = "consumptionLimited";
+										disabled = "TRUE";
+										break;
+								}
+						}
+						
+						
+						nextTimeStepDecrease*= timeStep; //calculate building's contribution in next timestep
+
+						if( resources[resourceKey]["value"] - nextTimeStepDecrease < 0){
+								reason = "consumptionLimited";
+								disabled = "TRUE";
+								break;
+						}
+				}
+				
+				if(disabled == "TRUE"
+					 && buildings[buildingKey]["disabled"] == "FALSE"
+					){
+						console.log("disabling" + " " + buildingKey);
+						disableBuildingReason(buildingKey, reason);
+				}
+				
+				else if(disabled == "FALSE"
+								&& buildings[buildingKey]["disabled"] == "TRUE"								
+							 ){
+						console.log("enabling" + " " + buildingKey);
+						enableBuilding(buildingKey);
+						
+				}
+				
+		}
 
 }
 

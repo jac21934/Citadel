@@ -1,15 +1,3 @@
-var fireObj = {
-
-
-
-
-}
-
-
-
-
-
-
 
 var fireOn = false;
 var fireUnlocked = false;
@@ -32,7 +20,7 @@ function fireButton(){
 				description = "<div style='text-align:center'>A good fire. Should attract travelers.</div> <hr> Wood&emsp;-1/s";
 				
 				document.getElementById("FireButton").className += " fireOn";
-				resources["wood"]["rate"] -= 1;
+				setResourceRate("wood", "fire",-1);
 				fireOn = true;
 				document.getElementById("FireButton").innerHTML = name;
 				document.getElementById("Fire").title = description;
@@ -53,8 +41,9 @@ function resetFire(){
 		document.getElementById("FireButton").innerHTML = name;
 		document.getElementById("Fire").title = description;
 
-		resources["wood"]["rate"] += 1;
+				setResourceRate("wood", "fire", 0);
 
+		
 }
 
 function manageFire(){

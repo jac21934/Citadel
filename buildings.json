@@ -109,6 +109,9 @@ var buildings = {
 				"resource": "human",
 				"disabled": "FALSE",
 				"amount_active" : 0,
+				"resourseCapLimited" : "FALSE",
+				"consumptionLimited" : "FALSE",
+				
 				"cost" : {
 						"wood" : 100,
 				},
