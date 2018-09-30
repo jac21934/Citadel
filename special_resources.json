@@ -1,0 +1,24 @@
+var special_resources = {
+		"lore" : {
+				"value" : 0,
+				//"resourceCap" : 100,
+				"rate" : {},
+				"rateUnits" : "s",
+				"discovered" : "FALSE",
+				"unlockReqs" :{
+						"resources" : {
+								"wood" : 0
+						},
+						"buildings" : {
+						},
+						"population" : {
+
+						},
+						"special_resources" : {
+
+						}
+				},
+
+		}
+		
+}
