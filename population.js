@@ -79,7 +79,9 @@ function displayPopulation(){
 		if(!displayPop){
 				var numPop = 0;
 				for( var key in population){
-						numPop += population[key]["resourceCap"];
+						if(population[key]["discovered"] == "TRUE"){
+								numPop += population[key]["resourceCap"];
+						}
 				}
 				if(numPop > 0){
 						displayPop = true;
@@ -91,8 +93,6 @@ function displayPopulation(){
 				}
 		}
 
-		console.log(population["human"]["resourceCap"]);
-		console.log(population["human"]["discovered"]);
 		
 		for( var key in population){
 				if( population[key]["discovered"] == "TRUE"
@@ -100,9 +100,6 @@ function displayPopulation(){
 						&& !pops.includes(key)
 					){
 						pops.push(key);
-						console.log(key);
-						console.log("here");
-
 						var value =  population[key]["value"];
 						value = Math.floor(value);
 

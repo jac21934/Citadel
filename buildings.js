@@ -1,5 +1,7 @@
 var buildingButtons = [];
 
+
+
 function buildingButton(key){
 		buildings[key]["value"] += 1;
 		if( "consumes" in buildings[key]){
@@ -124,7 +126,7 @@ function getDescriptionText(categoryKey, key){
 		if("rateIncrease" in category[categoryKey][key]){
 				for( newKey in category[categoryKey][key]["rateIncrease"]){
 						text += newKey.replace(/^\w/, c => c.toUpperCase());
-						text += "&emsp;";
+						text += "&emsp; +";
 						text += category[categoryKey][key]["rateIncrease"][newKey]["value"];
 						text += "/" + category[categoryKey][key]["rateIncrease"][newKey]["units"]; 
 						text += "<br>";
@@ -134,7 +136,7 @@ function getDescriptionText(categoryKey, key){
 		if("consumes" in category[categoryKey][key]){
 				for( newKey in category[categoryKey][key]["consumes"]){
 						text += newKey.replace(/^\w/, c => c.toUpperCase());
-						text += "&emsp;-";
+						text += "&emsp; -";
 						text += category[categoryKey][key]["consumes"][newKey]["value"];
 						text += "/" + category[categoryKey][key]["consumes"][newKey]["units"]; 
 						text += "<br>";

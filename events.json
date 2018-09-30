@@ -38,10 +38,12 @@ var events = {
 				
 		},
 
-				"myFirstHuman": {
+		"myFirstHuman": {
 				"message" : "A traveler has been attracted to the fire. It looks like they want to stay.",
 				"discovered" : "FALSE",
 				"shown" : "FALSE",
+				"needsLeftTabChange" : "TRUE",
+				"needsRightTabChange" : "FALSE",
 				"shownReqs" : {
 						"resources" : {
 								//none
@@ -53,7 +55,7 @@ var events = {
 								//none
 						},
 						"miscellaneous" : {
-					//			"fire" : 1
+								//			"fire" : 1
 						}
 						
 				},
@@ -70,7 +72,7 @@ var events = {
 				},
 
 				misc: function(){
-//						document.getElementById("Fire").style.display = "inline-block";
+						//						document.getElementById("Fire").style.display = "inline-block";
 
 				}
 				

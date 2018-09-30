@@ -1,4 +1,5 @@
 
+var changedTab = false;
 
 var displayPop = false;
 var displayBuildings = false;
@@ -7,7 +8,7 @@ var category = {
 		"buildings" : buildings,
 		"population" :population,
 		"events" : events,
-		"miscellaneous" : miscellaneous
+		"miscellaneous" : miscellaneous,
 };
 
 
@@ -63,7 +64,6 @@ function furnaceButton(key, value){
 function disableFurnace(key){
 
 		var barID = key + "BarID";
-		console.log("here");
 		document.getElementById(barID).className += " furnaceDisabled";
 
 }
@@ -90,13 +90,16 @@ function manageUnlocks(){
 						if(category[thing][object]["discovered"] == "FALSE"){
 								for(var reqClass in category[thing][object]["unlockReqs"]){
 										for( var subReq in category[thing][object]["unlockReqs"][reqClass]){
+												
 												if(typeof(category[reqClass][subReq]) == "undefined"){
 														console.log( "ERROR: " + object + " requirement " + subReq + " not found");
 														unlock = "FALSE";
 												}
 												else{
-														if(	category[reqClass][subReq]["discovered"] == "FALSE" ||
-																category[reqClass][subReq]["value"] < category[thing][object]["unlockReqs"][reqClass][subReq]){
+														// console.log( su + " " +  category[reqClass][subReq]["value"] + " " +  category[thing][object]["unlockReqs"][reqClass][subReq]){  
+														if(	(category[reqClass][subReq]["discovered"] == "FALSE"
+																 && subReq != object) 
+																|| category[reqClass][subReq]["value"] < category[thing][object]["unlockReqs"][reqClass][subReq]){
 																unlock  = "FALSE";
 																break;
 														}
@@ -221,8 +224,9 @@ function updateLog(message){
 function mainLoop() {
 
 
-		timestep = 10;  // actual number of miliseconds the function repeats in
-		gameTimeRate = 2.5; // the rate at which ingame time flows, 2.5 felt right, might change later...
+
+		var timestep = 10;  // actual number of miliseconds the function repeats in
+		var gameTimeRate = 2.5; // the rate at which ingame time flows, 2.5 felt right, might change later...
 		manageUnlocks();
 
 		
@@ -247,4 +251,6 @@ function mainLoop() {
 		
 		manageBuildingConsumption(timestep);
 		window.setTimeout("mainLoop()", timestep);
+
+		changedTab = false;
 }

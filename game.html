@@ -14,6 +14,7 @@
 		
 		<!-- json stuff  -->
 		<script type="text/javascript" src="resources.json"></script>
+		<script type="text/javascript" src="special_resources.json"></script>
 		<script type="text/javascript" src="population.json"></script>
 		<script type="text/javascript" src="misc.json"></script>
 		<script type="text/javascript" src="buildings.json"></script>
@@ -32,21 +33,21 @@
 
 
 		<!-- jquery stuff for those sweet sweet tooltips -->
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript" src="jquery_functions.js"></script>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script type="text/javascript" src="jquery_functions.js"></script>
 
 
-	<style>
-  label {
-    display: inline-block;
-    width: 5em;
-  }
-  </style>
+		<style>
+			label {
+					display: inline-block;
+					width: 5em;
+			}
+		</style>
 
 
-	<title>Citadel</title>
+		<title>Citadel</title>
 	</head>
 	<body onload="mainLoop()">
 		<!-- resources and population -->
@@ -62,9 +63,14 @@
 				
 				<div id="Resources" class="lefttabcontent" style="display:block">
 					<table style="width:100%;table-layout:fixed;" id="resourceTable"></table>
+					<br>
+					<br>
+					<br>
+					<br>
+					<table style="width:100%;table-layout:fixed;" id="specialResourceTable"></table>
 				</div>
 
-				<div id="Population" class="lefttabcontent" >
+				<div id="Population" class="lefttabcontent"  style="display:none" >
 					<table style="width:100%;table-layout:fixed;" id="populationTable"></table>
 				</div>
 
@@ -79,24 +85,26 @@
 					<button id="JobsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Jobs')">Jobs</button>
 					<button id="ScienceButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Science')">Science</button>
 					<button id="LogButton" class="righttablinks"   onclick="switchRightTabs(event, 'Log')">Log</button>
+					<button id="MenuButton" class="righttablinks" style="float:right" onclick="switchRightTabs(event, 'Menu')">Menu</button>
+
 				</div>
 				
 				<div id="Base" class="righttabcontent" style="display:block">
 
 					<div id="MessageBox" class="messagebox"> It's been a long time since you started wandering. Too long in some ways. Not long enough in others. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east. <br> <br> It'll do. </div>
 					
-
+					<hr>
 					<div style="width:100%">
 						<div style="width: max-content;display:none;margin:5px;" id="Fire" title="<div style='text-align:center'> Build a small fire.</div>">
  							<button id="FireButton"  type="button" class="button" onclick="fireButton()">Build a fire</button>
 						</div>
 						
-						<div style="width:fit-content;vertical-align:top;display:inline-block;margin:5px;" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood: 1">
- 							<button  type="button" class="button" onclick="resourceButton('wood')">Gather wood</button>
+						<div style="width:fit-content;vertical-align:top;display:inline-block;margin:5px;" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood +1">
+ 							<button  type="button" class="button" onclick="resourceButton('wood', 100)">Gather wood</button>
 						</div>
 
-						<div style="width:fit-content;vertical-align:top;display:inline-block;margin:5px;" title="<div style='text-align:center'> So much has changed.<br><br> The stars aren't where they used to be. Maybe you can find them again.</div> <hr>">
- 							<button  type="button" class="button">Watch the stars</button>
+						<div style="width:fit-content;vertical-align:top;display:inline-block;margin:5px;" title="<div style='text-align:center'> The stars aren't where they used to be. Maybe you can find them again.</div> <hr> Lore +0.01">
+ 							<button  type="button" class="button" onclick="resourceButton('lore', 0.01)">Watch the sky</button>
 						</div>
 
 						
@@ -115,18 +123,30 @@
 
 				
 				<div id="Log" class="righttabcontent" style="display:none">
-
-					<div style="text-align:center;color:white;width:100%;table-layout:fixed;" > Records of the past <br> <hr> <div>
+					
+					<div style="text-align:center;color:white;width:100%;table-layout:fixed;" > Records of the past <br> <hr>
+						<div>
 							
-					<table  id="LogContent" style="color:white;text-align:left;"> 
-						
-					</table>
+							<table  id="LogContent" style="color:white;text-align:left;"> 
+								
+							</table>
+
+						</div>
+					</div>
+				</div>
+				<div id="Menu" class="righttabcontent" style="display:none">
+					<!-- <div style="width:100px;vertical-align:top;display:block;margin:auto;" title="<div style='text-align:center'> This does nothing!</div>"> -->
+					<!-- 	<button> Save </button> -->
+					<!-- </div> -->
+					<!-- <div style="width:100px;vertical-align:top;display:block;margin:auto;" title="<div style='text-align:center'> This also does nothing!</div>"> -->
+					<!-- 	<button> Reset Progress </button> -->
+					<!-- </div> -->
 
 				</div>
 				
-
 				
-			</div>
+			</div>	
+			
 		</div>		
 
 

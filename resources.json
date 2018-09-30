@@ -42,9 +42,31 @@ var resources = {
 				"resourceCap" : 100,
 				"rate" : {},
 				"rateUnits" : "s",
-				"discovered" : "TRUE",
+				"discovered" : "FALSE",
 				"unlockReqs" :{
 						"resources" : {
+								"wood" : 0.001
+						},
+						"buildings" : {
+
+						},
+						"population" : {
+
+						}
+
+				},
+
+		},
+		"lore" : {
+				"value" : 0,
+				"resourceCap" : Number.POSITIVE_INFINITY,
+				"rate" : {},
+				"special_resource" : "TRUE",
+				"rateUnits" : "s",
+				"discovered" : "FALSE",
+				"unlockReqs" :{
+						"resources" : {
+								"lore" : 0.001
 						},
 						"buildings" : {
 

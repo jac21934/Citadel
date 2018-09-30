@@ -1,8 +1,11 @@
 
 
 function addToResource(key, amount){
-		resources[key]["value"] = Math.max(0, Math.min((resources[key]["value"] + amount), resources[key]["resourceCap"]));
+		resources[key]["value"] =  clamp((resources[key]["value"] + amount), 0, resources[key]["resourceCap"]);
+
 }
+
+
 
 
 
@@ -18,13 +21,17 @@ function manageResources(timeSteps){
 
 						toAdd = resources[key]["rateValue"];
 						toAdd *= timeStepsToSeconds;
-						
-						addToResource(key, toAdd);
+
+						if(toAdd != 0.0){
+								addToResource(key, toAdd);
+						}
 						
 				}
 		}
 		
+		
 
+		
 }
 
 function calcRateValue(key){
@@ -88,35 +95,60 @@ function calcAndSetResourceRate(resourceKey, buildingKey){
 
 function displayResources(){
 		var text = "";
-
+		var special_text = "";
 		for( var key in resources){
 				if( resources[key]["discovered"] == "TRUE"){
-
+						var new_text = "";
 						var value =  resources[key]["value"];
-						value = Math.round(value * 10) / 10;
+						value = Math.round(value * 100) / 100;
 						var rate = resources[key]["rateValue"] ;
+						if("special_resource" in resources[key]){
+								
+								if(resources[key]["special_resource"] == "TRUE")
+								{
+										special_text += "<tr>";
+										special_text += "<td>" + key.replace(/^\w/, c => c.toUpperCase()) + "</td>";
+										special_text += "<td>" + value  + "</td>";
+										special_text += "<td>" +  "</td>";
+										special_text += "<td>" + "(" + rate + "/" + resources[key]["rateUnits"] + ")"  + "</td>";
+										special_text += "</tr>";
+										continue;
+								}
+						}
+
+
+						
 						text += "<tr>";
 						text += "<td>" + key.replace(/^\w/, c => c.toUpperCase()) + "</td>";
 						text += "<td>" + value  + "</td>";
 						text += "<td>/" +  resources[key]["resourceCap"] + "</td>";
 						text += "<td>" + "(" + rate + "/" + resources[key]["rateUnits"] + ")"  + "</td>";
 						text += "</tr>";
+
+						
+
+						
 				}
 		}
 
 		document.getElementById("resourceTable").innerHTML = text;
+		document.getElementById("specialResourceTable").innerHTML = special_text;
 
+
+		
 }
 
 
 
-function resourceButton(key){
+function resourceButton(key, amount){
 		if(resources[key]["value"] < resources[key]["resourceCap"]){
-				//				resources[key]["value"] = Math.min( (resources[key]["value"] + 1), resources[key]["resourceCap"]);
-				addToResource(key ,100);
+				addToResource(key ,amount);
 		}
 		displayResources();
 }
+
+
+
 
 
 
