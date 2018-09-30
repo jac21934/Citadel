@@ -28,8 +28,8 @@ var population = {
 				"resourceCap" : 1,
 				"discovered": "FALSE",
 				"needs"  : {
-						"beer" : 1
-						"food" : 5
+						"beer" : 1,
+						"food" : 5,
 				},
 				"unlockReqs" :{
 						"resources" : {
