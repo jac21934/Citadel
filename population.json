@@ -22,13 +22,14 @@ var population = {
 
 		},
 		"dwarf" : {
-				"description" : "Nicknamed the quiet people by those who never met them, dwarves love mining almost as much as they love beer.",
+				"description" : "Nicknamed the quiet folk by people who never met them, dwarves love mining almost as much as they love beer. And they love beer.",
 				"plural" : "dwarves",
 				"value" : 0,
 				"resourceCap" : 1,
 				"discovered": "FALSE",
 				"needs"  : {
 						"beer" : 1
+						"food" : 5
 				},
 				"unlockReqs" :{
 						"resources" : {
