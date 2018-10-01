@@ -1,5 +1,57 @@
 var events = {
 
+		
+		"lookAround": {
+				"message" : "There are fallen branches everywhere. Maybe you could make something out of them.",
+				"discovered" : "FALSE",
+				"shown" : "FALSE",
+				"shownReqs" : {
+						"resources" : {
+								"wood": 0,
+						},
+						"buildings" : {
+								//none
+						},
+						"population" : {
+								//none
+						},
+						"miscellaneous" : {
+								//none
+						}
+						
+				},
+				"unlockReqs" :{
+						"resources" : {
+								//nothing
+						},
+						"buildings" : {
+								//nothing
+						},
+						"population" : {
+								//nothing
+						},
+						
+				},
+				"unlockBools" :{
+						"lookAround" : true,
+
+				},
+				"shownBools" : {
+						
+				},
+
+				
+
+				misc: function(){
+						document.getElementById("LookAround").style.display = "none";
+						document.getElementById("woodWrapper").style.display = "inline-block";
+						document.getElementById("skyWrapper").style.display = "inline-block";
+				}
+				
+				
+		},
+
+		
 		"builtAHouse": {
 				"message" : "The cabin looks good. A fire might draw in someone to live there.",
 				"discovered" : "FALSE",
@@ -29,6 +81,14 @@ var events = {
 						},
 						
 				},
+				"unlockBools" :{
+
+				},
+				"shownBools" : {
+						
+				},
+
+				
 
 				misc: function(){
 						document.getElementById("Fire").style.display = "inline-block";
@@ -42,8 +102,6 @@ var events = {
 				"message" : "A traveler has been attracted to the fire. It looks like they want to stay.",
 				"discovered" : "FALSE",
 				"shown" : "FALSE",
-				"needsLeftTabChange" : "TRUE",
-				"needsRightTabChange" : "FALSE",
 				"shownReqs" : {
 						"resources" : {
 								//none
@@ -70,6 +128,13 @@ var events = {
 						},
 						
 				},
+				"unlockBools" :{
+
+				},
+				"shownBools" : {
+						"PopulationClicked": true,
+				},
+
 
 				misc: function(){
 						//						document.getElementById("Fire").style.display = "inline-block";

@@ -13,8 +13,8 @@
 		<link rel="stylesheet" type="text/css" href="res/furnace.css" /> 
 		
 		<!-- json stuff  -->
+		<script type="text/javascript" src="flags.json"></script>
 		<script type="text/javascript" src="resources.json"></script>
-		<script type="text/javascript" src="special_resources.json"></script>
 		<script type="text/javascript" src="population.json"></script>
 		<script type="text/javascript" src="misc.json"></script>
 		<script type="text/javascript" src="buildings.json"></script>
@@ -57,8 +57,8 @@
 					<table style="width:100%;table-layout:fixed;" id="DateTable"></table>
 				</div>
 				<div class="tab">
-					<button id="ResourcesTab"  class="lefttablinks active" style="width:100%;" onclick="switchLeftTabs(event, 'Resources')">Resources</button>
-					<button id="PopulationTab" class="lefttablinks" style="width:0%;display:none;" onclick="switchLeftTabs(event, 'Population')">Population</button>
+					<button id="ResourcesButton"  class="lefttablinks active" style="width:100%;" onclick="switchLeftTabs(event, 'Resources')">Resources</button>
+					<button id="PopulationButton" class="lefttablinks" style="width:0%;display:none;" onclick="switchLeftTabs(event, 'Population')">Population</button>
 				</div>
 				
 				<div id="Resources" class="lefttabcontent" style="display:block">
@@ -80,7 +80,7 @@
 			</div>
 			<div class="column right">
 				<div class="tab">
-					<button class="righttablinks active" onclick="switchRightTabs(event, 'Base')">A Small Clearing</button>
+					<button id="BaseButton" class="righttablinks active" onclick="switchRightTabs(event, 'Base')">A Small Clearing</button>
 					<button id="BuildingsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Buildings')">Buildings</button>
 					<button id="JobsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Jobs')">Jobs</button>
 					<button id="ScienceButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Science')">Science</button>
@@ -95,15 +95,21 @@
 					
 					<hr>
 					<div style="width:100%">
-						<div style="width: max-content;display:none;margin:5px;" id="Fire" title="<div style='text-align:center'> Build a small fire.</div>">
+
+						<div  class="button_wrapper" style="display:inline-block" id="LookAround" title="<div style='text-align:center'> Examine your surroundings.</div>">
+ 							<button id="LookAroundButton"  type="button" class="button" onclick="lookAround()">Look around</button>
+						</div>
+						
+						
+						<div class="button_wrapper" id="Fire" title="<div style='text-align:center'> Build a small fire.</div>">
  							<button id="FireButton"  type="button" class="button" onclick="fireButton()">Build a fire</button>
 						</div>
 						
-						<div style="width:fit-content;vertical-align:top;display:inline-block;margin:5px;" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood +1">
+						<div id="woodWrapper" class="button_wrapper" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood +1">
  							<button  type="button" class="button" onclick="resourceButton('wood', 100)">Gather wood</button>
 						</div>
 
-						<div style="width:fit-content;vertical-align:top;display:inline-block;margin:5px;" title="<div style='text-align:center'> The stars aren't where they used to be. Maybe you can find them again.</div> <hr> Lore +0.01">
+						<div id="skyWrapper" class="button_wrapper" title="<div style='text-align:center'> The stars aren't where they used to be. Maybe you can find them again.</div> <hr> Lore +0.01">
  							<button  type="button" class="button" onclick="resourceButton('lore', 0.01)">Watch the sky</button>
 						</div>
 

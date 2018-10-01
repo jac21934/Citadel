@@ -5,11 +5,11 @@ function managePopulation(timeStep){
 
 		rate = timeStep / 1000;
 
-		var humanChance =  0.1;
+		var humanChance =  1.0;
 
 		humanChance *= rate;
 		
-		if( fireOn) {
+		if( flags["fireOn"]) {
 
 				if( population["human"]["value"] < population["human"]["resourceCap"]){
 						var rollDice = Math.random();
@@ -33,7 +33,6 @@ function managePopulation(timeStep){
 
 						var capTest = "/" + population[key]["resourceCap"];
 
-						console.log(popValID);
 						if(population[key]["value"] != valBuff){
 								document.getElementById(popValID).innerHTML = population[key]["value"];
 						}
@@ -85,9 +84,9 @@ function displayPopulation(){
 				}
 				if(numPop > 0){
 						displayPop = true;
-						document.getElementById("ResourcesTab").style.width = "50%";
-						document.getElementById("PopulationTab").style.display = "block";
-						document.getElementById("PopulationTab").style.width = "50%";
+						document.getElementById("ResourcesButton").style.width = "50%";
+						document.getElementById("PopulationButton").style.display = "block";
+						document.getElementById("PopulationButton").style.width = "50%";
 
 						
 				}
@@ -112,7 +111,6 @@ function displayPopulation(){
 						text += "<td id=\'" + popValID + "\'>" + value  + "</td>";
 						text += "<td id=\'" + popCapID + "\'>/" +  population[key]["resourceCap"] + "</td>";
 						text += "</tr>";
-						console.log(text);
 				}
 		}
 

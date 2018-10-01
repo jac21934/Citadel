@@ -126,6 +126,15 @@ ul {
 		font-size: small !important;
 }
 
+.button_wrapper{
+		width:fit-content;
+		display:none;
+		vertical-align:top;
+		display:inline-block;
+		margin:5px;
+		display:none;
+}
+
 .building{
 
 

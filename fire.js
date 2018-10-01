@@ -10,7 +10,7 @@ function fireButton(){
 
 		document.getElementById("FireButton").className = document.getElementById("FireButton").className.replace(" fireOn", "");
 		
-		if(!fireOn){
+		if(!flags["fireOn"]){
 				if(!fireUnlocked){
 						fireUnlocked = true;
 						miscellaneous["fire"]["value"] = 1;
@@ -21,7 +21,7 @@ function fireButton(){
 				
 				document.getElementById("FireButton").className += " fireOn";
 				setResourceRate("wood", "fire",-1);
-				fireOn = true;
+				flags["fireOn"] = true;
 				document.getElementById("FireButton").innerHTML = name;
 				document.getElementById("Fire").title = description;
 
@@ -37,7 +37,7 @@ function resetFire(){
 
 		var name = "Build a fire";
 		var	description = "<div style='text-align:center'> Build a small fire.</div>";
-		fireOn = false;
+		flags["fireOn"] = false;
 		document.getElementById("FireButton").innerHTML = name;
 		document.getElementById("Fire").title = description;
 
@@ -59,7 +59,7 @@ function manageFire(){
 		
 		if(resources["wood"]["value"] <= 0){
 				if(fire.disabled == false){
-						if(fireOn){
+						if(flags["fireOn"]){
 								resetFire();
 						}
 						
