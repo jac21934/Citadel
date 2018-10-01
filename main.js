@@ -33,6 +33,14 @@ function getActiveFurnaceFraction(key){
 }
 
 
+function lookAround(){
+
+		flags["lookAround"] = true;
+
+
+}
+
+
 function setFurnaceBar(key){
 
 		var percentage = clamp( (getActiveFurnaceFraction(key) * 100), 0, 100);
@@ -94,6 +102,7 @@ function manageUnlocks(){
 												if(typeof(category[reqClass][subReq]) == "undefined"){
 														console.log( "ERROR: " + object + " requirement " + subReq + " not found");
 														unlock = "FALSE";
+														break;
 												}
 												else{
 														// console.log( su + " " +  category[reqClass][subReq]["value"] + " " +  category[thing][object]["unlockReqs"][reqClass][subReq]){  
@@ -110,6 +119,22 @@ function manageUnlocks(){
 										}
 
 								}
+								if("unlockBools" in category[thing][object]){
+										for(var reqBool in category[thing][object]["unlockBools"]){
+												if(typeof(flags[reqBool]) == "undefined"){
+														console.log( "ERROR: " + object + " requirement flag " + reqBool + " not found");
+														unlock = "FALSE";
+														break;
+												}
+												else{
+														
+														if(flags[reqBool] != category[thing][object]["unlockBools"][reqBool]){
+																unlock = "FALSE";
+																break;
+														}
+												}
+										}
+								}
 								category[thing][object]["discovered"] = unlock;
 						}
 
@@ -125,32 +150,49 @@ pops = [];
 
 function switchRightTabs(evt, tabName){
     var i, tabcontent, tablinks;
+		var flagName = tabName + "Clicked";
+		
     tabcontent = document.getElementsByClassName("righttabcontent");
 		for (i = 0; i < tabcontent.length; i++) {
 				tabcontent[i].style.display = "none";
+				var flag = tabcontent[i].id + "Clicked";
+				flags[flag] = false;
+
 		}
     tablinks = document.getElementsByClassName("righttablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
+
     }
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
+		flags[flagName] = true;
+
 }
 
 
 
 function switchLeftTabs(evt, tabName){
     var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("lefttabcontent");
+		var flagName = tabName + "Clicked";
+
+		tabcontent = document.getElementsByClassName("lefttabcontent");
 		for (i = 0; i < tabcontent.length; i++) {
 				tabcontent[i].style.display = "none";
+				var flag = tabcontent[i].id + "Clicked";
+				flags[flag] = false;
+				
 		}
     tablinks = document.getElementsByClassName("lefttablinks");
 
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
+				
     }
     document.getElementById(tabName).style.display = "block";
+
+		flags[flagName] = true;
+		
     evt.currentTarget.className += " active";
 }
 
@@ -179,10 +221,20 @@ function manageEvents(){
 								if(	category[reqClass][subReq]["discovered"] == "FALSE" ||
 										category[reqClass][subReq]["value"] < currentEvent["shownReqs"][reqClass][subReq]){
 										shown  = "FALSE";
+										break;
 								}
 								
 						}
 				}
+
+				for(var reqBool in currentEvent["shownBools"]){
+						if( flags[reqBool] != currentEvent["shownBools"][reqBool]){
+								shown = "FALSE";
+								break;								
+						}
+							
+				}
+
 				currentEvent["shown"] = shown;
 				if(shown == "TRUE"){
 						var message = getDefaultMessage();
@@ -222,8 +274,6 @@ function updateLog(message){
 
 
 function mainLoop() {
-
-
 
 		var timestep = 10;  // actual number of miliseconds the function repeats in
 		var gameTimeRate = 2.5; // the rate at which ingame time flows, 2.5 felt right, might change later...
