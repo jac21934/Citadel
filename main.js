@@ -1,5 +1,6 @@
 
-var changedTab = false;
+var OldTime;
+var NewTime;
 
 var displayPop = false;
 var displayBuildings = false;
@@ -272,35 +273,42 @@ function updateLog(message){
 }
 
 
+function loadGame(){
+		requestAnimationFrame(mainLoop);
 
-function mainLoop() {
+}
 
-		var timestep = 10;  // actual number of miliseconds the function repeats in
-		var gameTimeRate = 2.5; // the rate at which ingame time flows, 2.5 felt right, might change later...
+
+var oldTimeStamp = 0;
+
+function mainLoop(timeStamp) {
+
+		var timestep = timeStamp - oldTimeStamp;
+		var gameTimeRate = 0.1; // the rate at which ingame time flows, 2.5 felt right, might change later...		
+
+		console.log(timestep);
+
+
+
 		manageUnlocks();
 
 		
 		displayResources();
 		displayPopulation();
 
-		
-		manageDate(gameTimeRate);
-
-		
+		manageDate(gameTimeRate, timestep);
 		manageResources(timestep);
 		
 		manageBuildingButtons();
 		manageEvents();
 		manageFire();
 
+		
 
 		managePopulation(timestep);
-		
-		
-
-		
 		manageBuildingConsumption(timestep);
-		window.setTimeout("mainLoop()", timestep);
 
-		changedTab = false;
+		oldTimeStamp = timeStamp;
+		requestAnimationFrame(mainLoop);
+		
 }

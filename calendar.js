@@ -6,8 +6,8 @@ var DAYS_IN_MONTH = 25;
 var day = 0;
 var year = 0;
 
-function manageDate(rate){
-
+function manageDate(rate, timeStep){
+		rate *= timeStep;
 		var DAYS_IN_YEAR = DAYS_IN_MONTH * months.length;
 		rate /= 1000;
 		day += rate;
