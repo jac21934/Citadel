@@ -3,9 +3,9 @@ function managePopulation(timeStep){
 		// check needs, kill if not enough food
 		// recruit if possible
 
-		rate = timeStep / 1000;
+		rate = timeStep * CONVERT_FROM_MS_TO_S;
 
-		var humanChance =  1.0;
+		var humanChance =  HUMAN_FIRE_CHANCE;
 
 		humanChance *= rate;
 		

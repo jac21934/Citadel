@@ -70,6 +70,16 @@ function furnaceButton(key, value){
 		
 }
 
+
+function exploreButton(){
+		var rollTheDice = Math.random();
+
+		
+
+
+}
+
+
 function disableFurnace(key){
 
 		var barID = key + "BarID";
@@ -285,10 +295,6 @@ function mainLoop(timeStamp) {
 
 		var timestep = timeStamp - oldTimeStamp;
 		var gameTimeRate = 0.1; // the rate at which ingame time flows, 2.5 felt right, might change later...		
-
-		console.log(timestep);
-
-
 
 		manageUnlocks();
 

@@ -1,4 +1,3 @@
-var DAYS_IN_MONTH = 25;
 
 
 
@@ -9,7 +8,7 @@ var year = 0;
 function manageDate(rate, timeStep){
 		rate *= timeStep;
 		var DAYS_IN_YEAR = DAYS_IN_MONTH * months.length;
-		rate /= 1000;
+		rate *= CONVERT_FROM_MS_TO_S;
 		day += rate;
 		if(	day > DAYS_IN_YEAR){ 
 				

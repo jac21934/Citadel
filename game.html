@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="res/furnace.css" /> 
 		
 		<!-- json stuff  -->
+				<script type="text/javascript" src="constants.json"></script>
 		<script type="text/javascript" src="flags.json"></script>
 		<script type="text/javascript" src="resources.json"></script>
 		<script type="text/javascript" src="population.json"></script>
@@ -83,7 +84,7 @@
 					<button id="BaseButton" class="righttablinks active" onclick="switchRightTabs(event, 'Base')">A Small Clearing</button>
 					<button id="BuildingsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Buildings')">Buildings</button>
 					<button id="JobsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Jobs')">Jobs</button>
-					<button id="ScienceButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Science')">Science</button>
+					<button id="ScienceButton" class="righttablinks"  onclick="switchRightTabs(event, 'Science')">Science</button>
 					<button id="LogButton" class="righttablinks"   onclick="switchRightTabs(event, 'Log')">Log</button>
 					<button id="MenuButton" class="righttablinks" style="float:right" onclick="switchRightTabs(event, 'Menu')">Menu</button>
 
@@ -112,7 +113,9 @@
 						<div id="skyWrapper" class="button_wrapper" title="<div style='text-align:center'> The stars aren't where they used to be. Maybe you can find them again.</div> <hr> Lore +0.01">
  							<button  type="button" class="button" onclick="resourceButton('lore', 0.01)">Watch the sky</button>
 						</div>
-
+						<div id="exploreWrapper" class="button_wrapper" title="<div style='text-align:center'> Take a look around</div> ">
+ 							<button  type="button" class="button" onclick="exploreButton()">Explore</button>
+						</div>
 						
 					</div>
 				</div>
@@ -125,6 +128,9 @@
 
 				
 				<div id="Science" class="righttabcontent" style="display:none">
+					
+					<div style="text-align:center;color:white;width:100%;table-layout:fixed;" > Memories? Or something new? <br> <hr>
+					</div>
 				</div>
 
 				

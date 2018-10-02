@@ -10,7 +10,7 @@ function addToResource(key, amount){
 
 
 function manageResources(timeSteps){
-		timeStepsToSeconds = timeSteps/1000;
+		timeStepsToSeconds = timeSteps * CONVERT_FROM_MS_TO_S;
 		
 		
 		for( var key in resources){
