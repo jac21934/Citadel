@@ -1,3 +1,4 @@
+var currentEvents;
 
 var OldTime;
 var NewTime;
@@ -74,6 +75,17 @@ function furnaceButton(key, value){
 function exploreButton(){
 		var rollTheDice = Math.random();
 
+		if(!flags["Mine_Discovered"]){
+				if( rollTheDice < MINE_DISCOVER_CHANCE){
+						flags["Mine_Discovered"] = true;
+						
+				}
+		}
+		else if(!flags["Overlook_Discovered"]){
+				if( rollTheDice < OVERLOOK_DISCOVER_CHANCE){
+						flags["Overlook_Discovered"] = true;
+				}
+		}
 		
 
 
@@ -209,6 +221,72 @@ function switchLeftTabs(evt, tabName){
 
 
 
+function removeMessage(id){
+		id += "Message";
+	//			console.log(document.getElementById("MessageBox").childNodes);
+		
+		var messages = document.getElementsByClassName("message");
+		
+		var messageCounter = 0;
+		
+		for( var i = 0; i < messages.length; i++){
+						if(messages[i].id == id){
+								updateLog(messages[i].innerHTML);
+								document.getElementById("MessageBox").removeChild(messages[i]);
+								break;
+
+						}
+		}
+
+		var messages = document.getElementsByClassName("message");
+
+		if(messages.length == 0){
+
+				addDefaultMessage();
+		}
+
+}
+
+
+function addMessage(message, id){
+//		console.log(document.getElementById("MessageBox").childNodes);
+
+		if(id == "default"){
+				console.log("ERROR: id = \"default\" is reserved.");
+				return;
+		}
+		
+		
+		
+		id += "Message";
+		document.getElementById("MessageBox").innerHTML += "<p class=\'message\' id=\'" + id + "\'>" +  message + "</p>";		
+
+		var defaultMessageBox = document.getElementById("defaultMessage");
+		if(typeof(defaultMessageBox) != "undefined"){
+				removeDefaultMessage();
+		}
+
+		
+
+
+}
+
+function addDefaultMessage(){
+		document.getElementById("MessageBox").innerHTML = "<p class=\'message\' id=\'defaultMessage\'>" +  getDefaultMessage() + "</p>" + 	document.getElementById("MessageBox").innerHTML ;		
+}
+
+function removeDefaultMessage(){
+
+		if(document.getElementById("defaultMessage") != null){
+				console.log("Here");
+				console.log(document.getElementById("defaultMessage"));
+				console.log(typeof(document.getElementById("defaultMessage")));
+				updateLog(document.getElementById("defaultMessage").innerHTML);
+				
+				document.getElementById("MessageBox").removeChild(document.getElementById("defaultMessage"));
+		}
+		
+}
 
 function manageEvents(){
 
@@ -218,9 +296,9 @@ function manageEvents(){
 						if(events[key]["discovered"] == "TRUE"
 							 && events[key]["shown"] == "FALSE"
 							){
+								removeMessage("default");
 								currentEvent = events[key];
-								updateLog(document.getElementById("MessageBox").innerHTML);
-								document.getElementById("MessageBox").innerHTML = currentEvent["message"];
+								addMessage(currentEvent["message"], key);
 								currentEvent.misc();
 						}
 				}
@@ -248,15 +326,82 @@ function manageEvents(){
 
 				currentEvent["shown"] = shown;
 				if(shown == "TRUE"){
-						var message = getDefaultMessage();
-						updateLog(document.getElementById("MessageBox").innerHTML);
-						document.getElementById("MessageBox").innerHTML = message;
+						//					var message = getDefaultMessage();
+						removeMessage(key);
 						currentEvent = "none";
 						
 				}
 
 		}
 }
+
+
+
+function checkForNewEvents(){
+			for(var key in events){
+				
+				if(events[key]["discovered"] == "TRUE"
+					 && events[key]["shown"] == "FALSE"
+					 && !(currentEvents.includes(key))
+					){
+						currentEvents.push(key);
+						addMessage(events[key]["message"], key);
+						events[key].misc();
+				}
+		}
+		
+}
+
+function checkCurrentEvents(){
+		for( var i = 0; i < currentEvents.length; i++){
+				key =  currentEvents[i];
+				var shown = "TRUE";
+				for( var reqClass in events[key]["shownReqs"]){
+						for( var subReq in events[key]["shownReqs"][reqClass]){
+								if(	category[reqClass][subReq]["discovered"] == "FALSE" ||
+										category[reqClass][subReq]["value"] < events[key]["shownReqs"][reqClass][subReq]){
+										shown  = "FALSE";
+										break;
+								}
+						}
+						if( shown == "FALSE"){
+								break;
+						}
+				}
+				if( shown == "TRUE"){
+						for( var reqBool  in events[key]["shownBools"]){
+								if( flags[reqBool] != events[key]["shownBools"][reqBool]){
+										shown = "FALSE";
+										break;								
+								}
+						}
+				}
+				events[key]["shown"] = shown;
+
+				if(shown == "TRUE"){
+						//remove event correctly
+						removeMessage(key);
+				}
+				
+		}
+
+}
+
+function manageEventsII(){
+
+
+		
+		//handle activating new events
+		checkForNewEvents();
+
+		//handle removing old events
+		checkCurrentEvents();
+				
+}
+
+
+		
+
 function getDefaultMessage(){
 
 		return "You stand in a small clearing.";
@@ -284,6 +429,8 @@ function updateLog(message){
 
 
 function loadGame(){
+		currentEvents = new Array(0);
+		
 		requestAnimationFrame(mainLoop);
 
 }
@@ -306,7 +453,7 @@ function mainLoop(timeStamp) {
 		manageResources(timestep);
 		
 		manageBuildingButtons();
-		manageEvents();
+		manageEventsII();
 		manageFire();
 
 		

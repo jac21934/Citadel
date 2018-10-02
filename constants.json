@@ -1,5 +1,5 @@
-var MINE_DISCOVER_CHANCE = 0.10;
-
+var MINE_DISCOVER_CHANCE = 0.50;
+var OVERLOOK_DISCOVER_CHANCE = 0.10;
 
 //calender constants
 var DAYS_IN_MONTH = 25;

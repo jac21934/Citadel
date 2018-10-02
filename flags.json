@@ -1,5 +1,15 @@
 flags = {
+		//intro flags
 		"lookAround" : false,
+
+
+		//exploration flags
+		"Mine_Discovered": false,
+		"Overlook_Discovered": false,
+		
+
+
+		//fire flags
 		"fireOn" : false,
 
 		// Clicked tab flags

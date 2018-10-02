@@ -15,15 +15,14 @@ function manageDate(rate, timeStep){
 				year += 1;
 				day = day % DAYS_IN_YEAR;
 		}
-		var month = months[Math.floor(day/DAYS_IN_MONTH)];		
-
+		var month = getMonth(); 
 		var dateText = "<tr>";
 		dateText += "<td style=\"text-align:left\">";
 		dateText += "Year " + year;
 		dateText += "</td>";
 		
 		dateText += "<td style=\"text-align:right\">";
-		dateText += month + " " + ( Math.floor(day) % DAYS_IN_MONTH + 1);
+		dateText += month + " " +  getDay();
 		dateText += "</td>";
 
 

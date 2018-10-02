@@ -45,7 +45,8 @@ var events = {
 				misc: function(){
 						document.getElementById("LookAround").style.display = "none";
 						document.getElementById("woodWrapper").style.display = "inline-block";
-						document.getElementById("skyWrapper").style.display = "inline-block";
+						document.getElementById("exploreWrapper").style.display = "inline-block";
+						
 				}
 				
 				
@@ -142,6 +143,106 @@ var events = {
 				}
 				
 				
-		}
+		},
+
+		"DiscoveredMine": {
+				"message" : "You found the entrance to an old mineshaft out in the mountains. There were stones laying around you could gather. You might be able to do more with some help.",
+				"discovered" : "FALSE",
+				"shown" : "FALSE",
+				"shownReqs" : {
+						"resources" : {
+								//none
+						},
+						"buildings" : {
+								//none
+						},
+						"population" : {
+								//none
+						},
+						"miscellaneous" : {
+								//none
+						}
+						
+				},
+				"unlockReqs" :{
+						"resources" : {
+								//none
+						},
+						"buildings" : {
+								//none
+						},
+						"population" : {
+								//none
+						},
+						
+				},
+				"unlockBools" :{
+						"Mine_Discovered" :true,
+				},
+				"shownBools" : {
+						"BaseClicked": false,
+				},
+
+
+				misc: function(){
+						document.getElementById("stoneWrapper").style.display = "inline-block";
+
+				}
+				
+				
+				
+		},
+		
+
+		"DiscoveredOverlook": {
+				"message" : "After an afternoon's trek up to the mountains, you took a break and watched the stars. The sky is clear and cloudless up there, and you watched unfamiliar stars for the rest of the night. You can return to watch the stars again, if you wish.",
+				"discovered" : "FALSE",
+				"shown" : "FALSE",
+				"shownReqs" : {
+						"resources" : {
+								//none
+						},
+						"buildings" : {
+								//none
+						},
+						"population" : {
+								//none
+						},
+						"miscellaneous" : {
+								//none
+						}
+						
+				},
+				"unlockReqs" :{
+						"resources" : {
+								//none
+						},
+						"buildings" : {
+								//none
+						},
+						"population" : {
+								//none
+						},
+						
+				},
+				"unlockBools" :{
+						"Overlook_Discovered" :true,
+				},
+				"shownBools" : {
+						"BaseClicked": false,
+				},
+
+
+				misc: function(){
+						document.getElementById("skyWrapper").style.display = "inline-block";
+
+				}
+				
+				
+				
+		},
+		
+
+		
 
 }

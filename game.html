@@ -92,7 +92,7 @@
 				
 				<div id="Base" class="righttabcontent" style="display:block">
 
-					<div id="MessageBox" class="messagebox"> It's been a long time since you started wandering. Too long in some ways. Not long enough in others. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east. <br> <br> It'll do. </div>
+					<div id="MessageBox" class="messagebox"> <p id="defaultMessage"> It's been a long time since you started wandering. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east. <br> <br> Time to set up camp. <p> </div>
 					
 					<hr>
 					<div style="width:100%">
@@ -111,9 +111,14 @@
 						</div>
 
 						<div id="skyWrapper" class="button_wrapper" title="<div style='text-align:center'> The stars aren't where they used to be. Maybe you can find them again.</div> <hr> Lore +0.01">
- 							<button  type="button" class="button" onclick="resourceButton('lore', 0.01)">Watch the sky</button>
+ 							<button  type="button" class="button" onclick="resourceButton('lore', 0.01)">Watch the stars</button>
 						</div>
-						<div id="exploreWrapper" class="button_wrapper" title="<div style='text-align:center'> Take a look around</div> ">
+
+						<div id="stoneWrapper" class="button_wrapper" title="<div style='text-align:center'> Gather stones up by the old mine.</div> <hr> Stone +1">
+ 							<button  type="button" class="button" onclick="resourceButton('stone', 1.0)">Gather stones</button>
+						</div>
+						
+						<div id="exploreWrapper" style="float:right" class="button_wrapper" title="<div style='text-align:center'> Take a look around</div> ">
  							<button  type="button" class="button" onclick="exploreButton()">Explore</button>
 						</div>
 						
