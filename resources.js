@@ -43,7 +43,7 @@ function calcRateValue(key){
 								continue;
 						}
 				}
-														toAdd += resources[key]["rate"][newKey];
+				toAdd += resources[key]["rate"][newKey];
 		}
 				
 				resources[key]["rateValue"] = toAdd;
@@ -51,14 +51,14 @@ function calcRateValue(key){
 }
 
 
-function addToResourceRate(resourceKey, buildingKey, rate){
+function addToResourceRate(resourceKey, newKey, rate){
 
 		resObj = resources[resourceKey];
-		if( !(buildingKey in resObj["rate"]) ){
-				resObj["rate"][buildingKey] = rate;
+		if( !(newKey in resObj["rate"]) ){
+				resObj["rate"][newKey] = rate;
 		}
 		else{
-				resObj["rate"][buildingKey] += rate;
+				resObj["rate"][newKey] += rate;
 		}
 		calcRateValue(resourceKey);
 }

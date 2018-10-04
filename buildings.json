@@ -94,6 +94,7 @@ var buildings = {
 								"wood": 50
 						},
 						"buildings" : {
+								"farm" : 1
 
 						},
 						"population" : {

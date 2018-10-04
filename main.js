@@ -14,13 +14,15 @@ var category = {
 };
 
 
-var currentEvent = "none";
 
 
 function clamp(num, min, max){
 		return Math.min(Math.max(num, min), max);
 }
 
+function randomInteger(min,max){
+		return Math.floor(Math.random() * (max - min) + min );
+}
 
 
 
@@ -74,23 +76,77 @@ function furnaceButton(key, value){
 
 function exploreButton(){
 		var rollTheDice = Math.random();
+		var rollFailed = true;
+		closeEvent("ExploringFailed");
 
+		//Check discoveries in order
 		if(!flags["Mine_Discovered"]){
 				if( rollTheDice < MINE_DISCOVER_CHANCE){
 						flags["Mine_Discovered"] = true;
-						
+						rollFailed = false;		
 				}
 		}
 		else if(!flags["Overlook_Discovered"]){
 				if( rollTheDice < OVERLOOK_DISCOVER_CHANCE){
 						flags["Overlook_Discovered"] = true;
+						rollFailed = false;
+				}
+		}
+
+		
+		if(rollFailed){
+
+				flags["Exploring_Failed"] = true;
+		}
+		else{
+
+				flags["Exploring_Failed"] = false;
+		}
+
+
+		for(var i = 0; i < currentEvents.length; i++){
+				
+				if(currentEvents[i].includes("Explore")){
+						closeEvent(key);
+				}
+		}
+
+		manageEvents();
+				
+}
+
+
+function closeEvent(key){
+		//remove event correctly
+		
+
+		if(!(currentEvents.includes(key))){
+				return;
+		}
+		console.log(currentEvents);
+		
+		removeMessage(key);
+		var buffEvents = [];
+		for(var i = 0; i < currentEvents.length; i++){
+				if (currentEvents[i] != key){
+						buffEvents.push(currentEvents[i]);
+				}
+		}
+		currentEvents = buffEvents;
+
+		events[key]["shown"] = "TRUE";
+
+		if(events[key]["repeatable"] == "TRUE"){
+				events[key]["shown"] = "FALSE";
+				events[key]["discovered"] = "FALSE";
+				for(var flag in events[key]["unlockBools"]){
+						flags[flag] = false;
 				}
 		}
 		
-
-
+		console.log(currentEvents);
+		console.log("\n");
 }
-
 
 function disableFurnace(key){
 
@@ -128,7 +184,6 @@ function manageUnlocks(){
 														break;
 												}
 												else{
-														// console.log( su + " " +  category[reqClass][subReq]["value"] + " " +  category[thing][object]["unlockReqs"][reqClass][subReq]){  
 														if(	(category[reqClass][subReq]["discovered"] == "FALSE"
 																 && subReq != object) 
 																|| category[reqClass][subReq]["value"] < category[thing][object]["unlockReqs"][reqClass][subReq]){
@@ -223,19 +278,18 @@ function switchLeftTabs(evt, tabName){
 
 function removeMessage(id){
 		id += "Message";
-	//			console.log(document.getElementById("MessageBox").childNodes);
 		
 		var messages = document.getElementsByClassName("message");
 		
 		var messageCounter = 0;
 		
 		for( var i = 0; i < messages.length; i++){
-						if(messages[i].id == id){
-								updateLog(messages[i].innerHTML);
-								document.getElementById("MessageBox").removeChild(messages[i]);
-								break;
+				if(messages[i].id == id){
+						updateLog(messages[i].innerHTML);
+						document.getElementById("MessageBox").removeChild(messages[i]);
+//						break;
 
-						}
+				}
 		}
 
 		var messages = document.getElementsByClassName("message");
@@ -249,7 +303,7 @@ function removeMessage(id){
 
 
 function addMessage(message, id){
-//		console.log(document.getElementById("MessageBox").childNodes);
+		//		console.log(document.getElementById("MessageBox").childNodes);
 
 		if(id == "default"){
 				console.log("ERROR: id = \"default\" is reserved.");
@@ -278,9 +332,6 @@ function addDefaultMessage(){
 function removeDefaultMessage(){
 
 		if(document.getElementById("defaultMessage") != null){
-				console.log("Here");
-				console.log(document.getElementById("defaultMessage"));
-				console.log(typeof(document.getElementById("defaultMessage")));
 				updateLog(document.getElementById("defaultMessage").innerHTML);
 				
 				document.getElementById("MessageBox").removeChild(document.getElementById("defaultMessage"));
@@ -288,65 +339,17 @@ function removeDefaultMessage(){
 		
 }
 
-function manageEvents(){
-
-		if(currentEvent == "none"){
-
-				for(var key in events){
-						if(events[key]["discovered"] == "TRUE"
-							 && events[key]["shown"] == "FALSE"
-							){
-								removeMessage("default");
-								currentEvent = events[key];
-								addMessage(currentEvent["message"], key);
-								currentEvent.misc();
-						}
-				}
-		}
-		else{
-				var shown = "TRUE";
-				for(var reqClass in currentEvent["shownReqs"]){
-						for( var subReq in currentEvent["shownReqs"][reqClass]){
-								if(	category[reqClass][subReq]["discovered"] == "FALSE" ||
-										category[reqClass][subReq]["value"] < currentEvent["shownReqs"][reqClass][subReq]){
-										shown  = "FALSE";
-										break;
-								}
-								
-						}
-				}
-
-				for(var reqBool in currentEvent["shownBools"]){
-						if( flags[reqBool] != currentEvent["shownBools"][reqBool]){
-								shown = "FALSE";
-								break;								
-						}
-							
-				}
-
-				currentEvent["shown"] = shown;
-				if(shown == "TRUE"){
-						//					var message = getDefaultMessage();
-						removeMessage(key);
-						currentEvent = "none";
-						
-				}
-
-		}
-}
-
-
 
 function checkForNewEvents(){
-			for(var key in events){
+		for(var key in events){
 				
 				if(events[key]["discovered"] == "TRUE"
 					 && events[key]["shown"] == "FALSE"
 					 && !(currentEvents.includes(key))
 					){
 						currentEvents.push(key);
-						addMessage(events[key]["message"], key);
 						events[key].misc();
+						addMessage(events[key]["message"], key);
 				}
 		}
 		
@@ -378,33 +381,45 @@ function checkCurrentEvents(){
 				}
 				events[key]["shown"] = shown;
 
-				if(shown == "TRUE"){
-						//remove event correctly
-						removeMessage(key);
+				if(events[key]["shown"] == "TRUE"){
+						console.log(key + " needs to be closed");
+						// //remove event correctly
+						// removeMessage(key);
+						// if(events[key]["repeatable"] == "TRUE"){
+						// 		events[key]["shown"] = "FALSE";
+						// 		events[key]["discovered"] = "FALSE";
+						// }
+						
+						closeEvent(key);
 				}
 				
 		}
 
 }
 
-function manageEventsII(){
-
-
+function manageEvents(){
 		
 		//handle activating new events
 		checkForNewEvents();
 
 		//handle removing old events
 		checkCurrentEvents();
-				
+		
 }
 
 
-		
+
 
 function getDefaultMessage(){
+		var message = "";
 
-		return "You stand in a small clearing.";
+		if(events["litAFire"]["discovered"] == "TRUE"){
+				message = "You stand in a small campsite.";
+		}
+		else{
+				message = "You stand in a small clearing.";
+		}
+		return message; 
 
 }
 
@@ -448,12 +463,13 @@ function mainLoop(timeStamp) {
 		
 		displayResources();
 		displayPopulation();
-
+		displayScience();
+		
 		manageDate(gameTimeRate, timestep);
 		manageResources(timestep);
 		
 		manageBuildingButtons();
-		manageEventsII();
+		manageEvents();
 		manageFire();
 
 		

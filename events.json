@@ -4,6 +4,7 @@ var events = {
 		"lookAround": {
 				"message" : "There are fallen branches everywhere. Maybe you could make something out of them.",
 				"discovered" : "FALSE",
+				"repeatable" : "FALSE",
 				"shown" : "FALSE",
 				"shownReqs" : {
 						"resources" : {
@@ -56,6 +57,7 @@ var events = {
 		"builtAHouse": {
 				"message" : "The cabin looks good. A fire might draw in someone to live there.",
 				"discovered" : "FALSE",
+				"repeatable" : "FALSE",
 				"shown" : "FALSE",
 				"shownReqs" : {
 						"resources" : {
@@ -99,9 +101,107 @@ var events = {
 				
 		},
 
+		"foundWood": {
+				"message" : "You collect an armful of sticks. You think you could make something with them.",
+				"discovered" : "FALSE",
+				"repeatable" : "FALSE",
+				"shown" : "FALSE",
+				"shownReqs" : {
+						"resources" : {
+								//none
+						},
+						"buildings" : {
+								//none
+						},
+						"population" : {
+								//none
+						},
+						"miscellaneous" : {
+//								"fire" : 1
+						}
+						
+				},
+				"unlockReqs" :{
+						"resources" : {
+						},
+						"buildings" : {
+	//							"cabin" : 1
+						},
+						"population" : {
+						},
+						
+				},
+				"unlockBools" :{
+						"displayBuildings": true,
+				},
+				"shownBools" : {
+						"BuildingsClicked" : true,
+				},
+
+				
+
+				misc: function(){
+
+				}
+				
+				
+		},
+
+		"litAFire": {
+				"message" : "This place is looking less like a empty clearing and more like a home.",
+				"discovered" : "FALSE",
+				"repeatable" : "FALSE",
+				"shown" : "FALSE",
+				"shownReqs" : {
+						"resources" : {
+								//none
+						},
+						"buildings" : {
+								//none
+						},
+						"population" : {
+								//none
+						},
+						"miscellaneous" : {
+//								"fire" : 1
+						}
+						
+				},
+				"unlockReqs" :{
+						"resources" : {
+						},
+						"buildings" : {
+	//							"cabin" : 1
+						},
+						"population" : {
+						},
+						
+				},
+				"unlockBools" :{
+						"fireOn" : true,
+				},
+				"shownBools" : {
+						"BaseClicked" : false,
+				},
+
+				
+
+				misc: function(){
+						document.getElementById("BaseButton").innerHTML = "A Small Campsite"
+
+				}
+				
+				
+		},
+
+
+
+		
+
 		"myFirstHuman": {
 				"message" : "A traveler has been attracted to the fire. It looks like they want to stay.",
 				"discovered" : "FALSE",
+				"repeatable" : "FALSE",
 				"shown" : "FALSE",
 				"shownReqs" : {
 						"resources" : {
@@ -145,9 +245,73 @@ var events = {
 				
 		},
 
-		"DiscoveredMine": {
+		"ExploringFailed": {
+				"message" : "",
+				"discovered" : "FALSE",
+				"repeatable" : "TRUE",
+				"shown" : "FALSE",
+				"shownReqs" : {
+						"resources" : {
+								//none
+						},
+						"buildings" : {
+								//none
+						},
+						"population" : {
+								//none
+						},
+						"miscellaneous" : {
+								//none
+						}
+						
+				},
+				"unlockReqs" :{
+						"resources" : {
+								//none
+						},
+						"buildings" : {
+								//none
+						},
+						"population" : {
+								//none
+						},
+						
+				},
+				"unlockBools" :{
+						"Exploring_Failed" :true,
+				},
+				"shownBools" : {
+						"BaseClicked": false,
+				},
+
+
+				misc: function(){
+						
+						var messages = [
+								"You wander around the forest for a few hours, but don't find anything.",
+								"You walk through the mountainside for a while and take in the sights.",
+						];
+
+
+
+						var index = randomInteger(0, messages.length);
+
+
+						events["ExploringFailed"]["message"] = messages[index];
+						
+				}
+				
+
+				
+		},
+		
+
+
+		
+		"Explore_DiscoveredMine": {
 				"message" : "You found the entrance to an old mineshaft out in the mountains. There were stones laying around you could gather. You might be able to do more with some help.",
 				"discovered" : "FALSE",
+				"repeatable" : "FALSE",
 				"shown" : "FALSE",
 				"shownReqs" : {
 						"resources" : {
@@ -194,9 +358,10 @@ var events = {
 		},
 		
 
-		"DiscoveredOverlook": {
-				"message" : "After an afternoon's trek up to the mountains, you took a break and watched the stars. The sky is clear and cloudless up there, and you watched unfamiliar stars for the rest of the night. You can return to watch the stars again, if you wish.",
+		"Explore_DiscoveredOverlook": {
+				"message" : "After an afternoon's trek up to the mountains, you take a break to watch the stars. The sky is clear and cloudless up there, and you watch an unfamiliar sky for the rest of the night. You can return to watch the stars again, if you wish.",
 				"discovered" : "FALSE",
+				"repeatable" : "FALSE",
 				"shown" : "FALSE",
 				"shownReqs" : {
 						"resources" : {

@@ -13,17 +13,19 @@
 		<link rel="stylesheet" type="text/css" href="res/furnace.css" /> 
 		
 		<!-- json stuff  -->
-				<script type="text/javascript" src="constants.json"></script>
+		<script type="text/javascript" src="constants.json"></script>
 		<script type="text/javascript" src="flags.json"></script>
 		<script type="text/javascript" src="resources.json"></script>
 		<script type="text/javascript" src="population.json"></script>
 		<script type="text/javascript" src="misc.json"></script>
 		<script type="text/javascript" src="buildings.json"></script>
-		<script type="text/javascript" src="events.json"></script>		
+		<script type="text/javascript" src="events.json"></script>
+		<script type="text/javascript" src="science.json"></script>		
 
 
 
 		<!-- javascript stuff -->
+		<script type="text/javascript" src="science.js"></script>
 		<script type="text/javascript" src="population.js"></script>
 		<script type="text/javascript" src="resources.js"></script>
 		<script type="text/javascript" src="buildings.js"></script>
@@ -40,19 +42,25 @@
 		<script type="text/javascript" src="jquery_functions.js"></script>
 
 
-		<style>
-			label {
-					display: inline-block;
-					width: 5em;
-			}
-		</style>
+		<!-- <style> -->
+			<!-- 	label { -->
+			<!-- 			display: inline-block; -->
+			<!-- 			width: 5em; -->
+			<!-- 	} -->
+			<!-- </style> -->
 
 
 		<title>Citadel</title>
 	</head>
-	<body onload="loadGame()">
-		<!-- resources and population -->
-		<div class="row">
+
+
+
+	<!-- Now for the actual page -->
+	<body onload="loadGame()"> <!-- load various variables and start the main loop -->
+		<!-- <div class="row" style="height:100%">	 -->
+
+			<!-- resources and population -->
+			
 			<div class="column left" style="background-color:#aaa;">
 				<div id="Date" style="text-align:center;padding: 5px">
 					<table style="width:100%;table-layout:fixed;" id="DateTable"></table>
@@ -74,97 +82,120 @@
 				<div id="Population" class="lefttabcontent"  style="display:none" >
 					<table style="width:100%;table-layout:fixed;" id="populationTable"></table>
 				</div>
-
-
-				
-				<!-- literally everything else -->
 			</div>
-			<div class="column right">
-				<div class="tab">
-					<button id="BaseButton" class="righttablinks active" onclick="switchRightTabs(event, 'Base')">A Small Clearing</button>
-					<button id="BuildingsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Buildings')">Buildings</button>
-					<button id="JobsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Jobs')">Jobs</button>
-					<button id="ScienceButton" class="righttablinks"  onclick="switchRightTabs(event, 'Science')">Science</button>
-					<button id="LogButton" class="righttablinks"   onclick="switchRightTabs(event, 'Log')">Log</button>
-					<button id="MenuButton" class="righttablinks" style="float:right" onclick="switchRightTabs(event, 'Menu')">Menu</button>
 
-				</div>
-				
-				<div id="Base" class="righttabcontent" style="display:block">
 
-					<div id="MessageBox" class="messagebox"> <p id="defaultMessage"> It's been a long time since you started wandering. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east. <br> <br> Time to set up camp. <p> </div>
-					
-					<hr>
-					<div style="width:100%">
 
-						<div  class="button_wrapper" style="display:inline-block" id="LookAround" title="<div style='text-align:center'> Examine your surroundings.</div>">
- 							<button id="LookAroundButton"  type="button" class="button" onclick="lookAround()">Look around</button>
-						</div>
-						
-						
-						<div class="button_wrapper" id="Fire" title="<div style='text-align:center'> Build a small fire.</div>">
- 							<button id="FireButton"  type="button" class="button" onclick="fireButton()">Build a fire</button>
-						</div>
-						
-						<div id="woodWrapper" class="button_wrapper" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood +1">
- 							<button  type="button" class="button" onclick="resourceButton('wood', 100)">Gather wood</button>
-						</div>
 
-						<div id="skyWrapper" class="button_wrapper" title="<div style='text-align:center'> The stars aren't where they used to be. Maybe you can find them again.</div> <hr> Lore +0.01">
- 							<button  type="button" class="button" onclick="resourceButton('lore', 0.01)">Watch the stars</button>
-						</div>
 
-						<div id="stoneWrapper" class="button_wrapper" title="<div style='text-align:center'> Gather stones up by the old mine.</div> <hr> Stone +1">
- 							<button  type="button" class="button" onclick="resourceButton('stone', 1.0)">Gather stones</button>
-						</div>
-						
-						<div id="exploreWrapper" style="float:right" class="button_wrapper" title="<div style='text-align:center'> Take a look around</div> ">
- 							<button  type="button" class="button" onclick="exploreButton()">Explore</button>
-						</div>
-						
+			<!-- literally everything else -->
+			<div class="column right" style="flex-direction:column;">
+				<div class="tab" style="justify-content:space-between;flex-shrink:0" >
+					<div id="GameButtons" class="Game-Buttons">
+						<button id="BaseButton" class="righttablinks active" onclick="switchRightTabs(event, 'Base')">A Small Clearing</button>
+						<button id="BuildingsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Buildings')">Buildings</button>
+						<button id="JobsButton" class="righttablinks" style="display:none;" onclick="switchRightTabs(event, 'Jobs')">Jobs</button>
+						<button id="ScienceButton" class="righttablinks" style="display:none;"  onclick="switchRightTabs(event, 'Science')">Research</button>
+						<button id="LogButton" class="righttablinks"   onclick="switchRightTabs(event, 'Log')">Log</button>
+					</div>
+					<div id="Menu" class="Menu-Button">
+						<button id="MenuButton" class="righttablinks" style="float:right" onclick="switchRightTabs(event, 'Menu')">Menu</button>
 					</div>
 				</div>
 
-				<div id="Buildings" style="position:relative" class="righttabcontent" style="display:none">
-				</div>
-				
-				<div id="Jobs" class="righttabcontent" style="display:none">
-				</div>
 
-				
-				<div id="Science" class="righttabcontent" style="display:none">
+				<div class="bottom" >
 					
-					<div style="text-align:center;color:white;width:100%;table-layout:fixed;" > Memories? Or something new? <br> <hr>
-					</div>
-				</div>
+					<div id="Base" class="righttabcontent" style="display:block">
 
-				
-				<div id="Log" class="righttabcontent" style="display:none">
-					
-					<div style="text-align:center;color:white;width:100%;table-layout:fixed;" > Records of the past <br> <hr>
-						<div>
+						<!-- Initial message -->
+						<div id="MessageBox" class="messagebox"> <p id="defaultMessage"> It's been a long time since you started wandering. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east.</p> </div>
+						
+						<hr>
+						<div style="width:100%">
+
+							<div  class="button_wrapper" style="display:inline-block" id="LookAround" title="<div style='text-align:center'> Examine your surroundings.</div>">
+ 								<button id="LookAroundButton"  type="button" class="button" onclick="lookAround()">Look around</button>
+							</div>
 							
-							<table  id="LogContent" style="color:white;text-align:left;"> 
-								
-							</table>
+							
+							<div class="button_wrapper" id="Fire" title="<div style='text-align:center'> Build a small fire.</div>">
+ 								<button id="FireButton"  type="button" class="button" onclick="fireButton()">Build a fire</button>
+							</div>
+							
+							<div id="woodWrapper" class="button_wrapper" title="<div style='text-align:center'> Gather up some branches.</div> <hr> Wood +1">
+ 								<button  type="button" class="button" onclick="resourceButton('wood', 100)">Gather wood</button>
+							</div>
 
+
+
+							<div id="stoneWrapper" class="button_wrapper" title="<div style='text-align:center'> Gather stones up by the old mine.</div> <hr> Stone +1">
+ 								<button  type="button" class="button" onclick="resourceButton('stone', 1.0)">Gather stones</button>
+							</div>
+							
+							<div id="skyWrapper" class="button_wrapper" title="<div style='text-align:center'> The stars aren't where they used to be. Maybe you can find them again.</div> <hr> Lore +0.01">
+ 								<button  type="button" class="button" onclick="resourceButton('lore', 0.01)">Watch the stars</button>
+							</div>
+
+							
+							<div id="exploreWrapper" style="float:right" class="button_wrapper" title="<div style='text-align:center'> Take a look around</div> ">
+ 								<button  type="button" class="button" onclick="exploreButton()">Explore</button>
+							</div>
+							
 						</div>
 					</div>
-				</div>
-				<div id="Menu" class="righttabcontent" style="display:none">
-					<!-- <div style="width:100px;vertical-align:top;display:block;margin:auto;" title="<div style='text-align:center'> This does nothing!</div>"> -->
-					<!-- 	<button> Save </button> -->
-					<!-- </div> -->
-					<!-- <div style="width:100px;vertical-align:top;display:block;margin:auto;" title="<div style='text-align:center'> This also does nothing!</div>"> -->
-					<!-- 	<button> Reset Progress </button> -->
-					<!-- </div> -->
 
-				</div>
+					<div id="Buildings" style="position:relative" class="righttabcontent" style="display:none">
+					</div>
+					
+					<div id="Jobs" class="righttabcontent" style="display:none">
+					</div>
+
+					
+					<div id="Science" class="righttabcontent" style="display:none">
+							<div id="ResearchContent" class="Science-Content" >
+								<div id="LoreContent"   class="science_column">
+									The Old Ways
+									<hr>
+								</div>
+								<div id="AlchemyContent"  class="science_column">
+									Blood and Magic
+									<hr>
+								</div>
+								<div id="FocusContent" class="science_column">
+									An Inner Strength
+									<hr>
+								</div>
+							</div>
+					</div>
+
+					
+					<div id="Log" class="righttabcontent" style="display:none">
+						
+						<div style="text-align:center;color:white;width:100%;table-layout:fixed;" > Records of the past <br> <hr>
+							<div>
+								
+								<table  id="LogContent" style="color:white;text-align:left;"> 
+									
+								</table>
+
+							</div>
+						</div>
+					</div>
+					<div id="Menu" class="righttabcontent" style="display:none">
+						<!-- <div style="width:100px;vertical-align:top;display:block;margin:auto;" title="<div style='text-align:center'> This does nothing!</div>"> -->
+							<!-- 	<button> Save </button> -->
+							<!-- </div> -->
+						<!-- <div style="width:100px;vertical-align:top;display:block;margin:auto;" title="<div style='text-align:center'> This also does nothing!</div>"> -->
+							<!-- 	<button> Reset Progress </button> -->
+							<!-- </div> -->
+
+					</div>
+					
+					
+				</div>	
 				
-				
-			</div>	
-			
-		</div>		
+			</div>
 
 
 	</body>

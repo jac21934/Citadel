@@ -4,6 +4,7 @@ flags = {
 
 
 		//exploration flags
+		"Exploring_Failed" : false,
 		"Mine_Discovered": false,
 		"Overlook_Discovered": false,
 		
@@ -26,4 +27,16 @@ flags = {
 		"JobsClicked" : false,
 		"ScienceClicked" : false,
 		"LogClicked" : false,
+
+
+		//Which tabs are shown
+		"displayPop" : false,
+		"displayBuildings" : false,
+		"displayScience"  : false, 
+
+		//specific science stuff shown:
+		"displayLore" : false,
+		"displayAlchemy" : false,
+		"displayFocus" : false,
+		
 }

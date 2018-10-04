@@ -253,9 +253,9 @@ function manageBuildingButtons(){
 				if(buildings[key]["discovered"] == "TRUE"
 					 && !buildingButtons.includes(key)
 					){
-						if(!displayBuildings){
+						if(!flags["displayBuildings"]){
 								document.getElementById("BuildingsButton").style = "block";
-								displayBuildings = true;
+								flags["displayBuildings"] = true;
 
 						}
 						buildingButtons.push(key);
