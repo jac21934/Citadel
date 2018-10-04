@@ -34,6 +34,8 @@
 		<script type="text/javascript" src="main.js"></script>
 
 
+		<!-- More javascript stuff, but for cookies -->
+		<script type="text/javascript" src="cookies.js"></script>
 
 		<!-- jquery stuff for those sweet sweet tooltips -->
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -98,7 +100,7 @@
 						<button id="ScienceButton" class="righttablinks" style="display:none;"  onclick="switchRightTabs(event, 'Science')">Research</button>
 						<button id="LogButton" class="righttablinks"   onclick="switchRightTabs(event, 'Log')">Log</button>
 					</div>
-					<div id="Menu" class="Menu-Button">
+					<div id="MenuTab" class="Menu-Button">
 						<button id="MenuButton" class="righttablinks" style="float:right" onclick="switchRightTabs(event, 'Menu')">Menu</button>
 					</div>
 				</div>
@@ -182,17 +184,12 @@
 							</div>
 						</div>
 					</div>
+					
 					<div id="Menu" class="righttabcontent" style="display:none">
-						<!-- <div style="width:100px;vertical-align:top;display:block;margin:auto;" title="<div style='text-align:center'> This does nothing!</div>"> -->
-							<!-- 	<button> Save </button> -->
-							<!-- </div> -->
-						<!-- <div style="width:100px;vertical-align:top;display:block;margin:auto;" title="<div style='text-align:center'> This also does nothing!</div>"> -->
-							<!-- 	<button> Reset Progress </button> -->
-							<!-- </div> -->
-
+ 								<button  type="button" class="button" onclick="testCookie()">Test Cookie</button>
+ 								<button  type="button" class="button" onclick="getCookies()">Get Cookies</button>								
 					</div>
-					
-					
+
 				</div>	
 				
 			</div>
