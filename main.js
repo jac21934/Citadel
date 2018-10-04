@@ -445,6 +445,10 @@ function updateLog(message){
 
 function loadGame(){
 		currentEvents = new Array(0);
+
+		for(var key in resources){
+				calcRateValue(key);
+		}
 		
 		requestAnimationFrame(mainLoop);
 
