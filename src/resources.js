@@ -45,7 +45,6 @@ function calcRateValue(key){
 				}
 				toAdd += resources[key]["rate"][newKey];
 		}
-		console.log(toAdd);		
 		resources[key]["rateValue"] = toAdd;
 
 }

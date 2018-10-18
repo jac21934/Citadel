@@ -1,8 +1,6 @@
 var buildingButtons = [];
 
-
-
-function buildingButton(key){
+function addBuilding(key){
 		buildings[key]["value"] += 1;
 		if( "consumes" in buildings[key]){
 				if(buildings[key]["disabled"] == "FALSE"
@@ -13,17 +11,12 @@ function buildingButton(key){
 				}
 				
 				if(buildings[key]["value"] == 1){
-						//						document.getElementById( key + "BarID").style.width = "100%";
 						setFurnaceBar(key);
 				}
 
 		}
-		console.log("Added " + key);
 		
- 		for( var newKey in buildings[key]["cost"]){
-				resources[newKey]["value"] -= buildings[key]["cost"][newKey];
-				buildings[key]["cost"][newKey] = buildings[key].process();
-		}
+ 	
 		if(buildings[key]["disabled"] != "TRUE"){
 				if( "rateIncrease" in buildings[key]){
 						for( var newKey in buildings[key]["rateIncrease"]){
@@ -56,14 +49,28 @@ function buildingButton(key){
 						
 				}
 		}
-		
 
 		document.getElementById(key).innerHTML = getNameText(key);
 
 		var keyID = key + "ID";
 
 		document.getElementById(keyID).title = getDescriptionText("buildings", key);
+
 		
+}
+
+function buildingButton(key){
+
+
+
+ 		for( var newKey in buildings[key]["cost"]){
+				resources[newKey]["value"] -= buildings[key]["cost"][newKey];
+				buildings[key]["cost"][newKey] = buildings[key].process();
+		}
+
+
+		addBuilding(key);
+
 		displayResources();
 		
 }

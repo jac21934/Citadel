@@ -39,7 +39,7 @@ var resources = {
 		},
 		"wood" : {
 				"value" : 0,
-				"resourceCap" : 100,
+				"resourceCap" : 500,
 				"rate" : {},
 				"rateUnits" : "s",
 				"discovered" : "FALSE",
@@ -59,7 +59,7 @@ var resources = {
 		},
 		"stone" : {
 				"value" : 0,
-				"resourceCap" : 100,
+				"resourceCap" : 500,
 				"rate" : {},
 				"rateUnits" : "s",
 				"discovered" : "FALSE",

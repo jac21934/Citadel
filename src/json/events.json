@@ -290,6 +290,9 @@ var events = {
 						var messages = [
 								"You wander around the forest for a few hours, but don't find anything.",
 								"You walk through the mountainside for a while and take in the sights.",
+								"You found the remains of an old battlefield out in the foothills of the mountains.",
+								
+								"You found a meadow of catnip out in the forest.",
 						];
 
 

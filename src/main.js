@@ -1,10 +1,6 @@
 var currentEvents;
 
-var OldTime;
-var NewTime;
 
-var displayPop = false;
-var displayBuildings = false;
 var category = {
 		"resources" : resources,
 		"buildings" : buildings,
@@ -12,7 +8,6 @@ var category = {
 		"events" : events,
 		"miscellaneous" : miscellaneous,
 };
-
 
 
 
@@ -123,7 +118,6 @@ function closeEvent(key){
 		if(!(currentEvents.includes(key))){
 				return;
 		}
-		console.log(currentEvents);
 		
 		removeMessage(key);
 		var buffEvents = [];
@@ -144,8 +138,6 @@ function closeEvent(key){
 				}
 		}
 		
-		console.log(currentEvents);
-		console.log("\n");
 }
 
 function disableFurnace(key){
@@ -386,14 +378,7 @@ function checkCurrentEvents(){
 				events[key]["shown"] = shown;
 
 				if(events[key]["shown"] == "TRUE"){
-						console.log(key + " needs to be closed");
-						// //remove event correctly
-						// removeMessage(key);
-						// if(events[key]["repeatable"] == "TRUE"){
-						// 		events[key]["shown"] = "FALSE";
-						// 		events[key]["discovered"] = "FALSE";
-						// }
-						
+
 						closeEvent(key);
 				}
 				
@@ -423,6 +408,14 @@ function getDefaultMessage(){
 		else{
 				message = "You stand in a small clearing.";
 		}
+
+		if(flags["fireOn"]){
+				message += " A small campfire burns nearby.";
+				
+
+		}
+
+		
 		return message; 
 
 }

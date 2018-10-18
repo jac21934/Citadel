@@ -7,41 +7,45 @@
 		<link rel="shortcut icon" href="images/pickaxe_icon.png" type="image/x-icon">
 
 		<!-- css stuff -->
-		<link rel="stylesheet" type="text/css" href="res/main_style.css" /> 
+		<link rel="stylesheet" type="text/css" href="res/main_style.css" />
+		<link rel="stylesheet" type="text/css" href="res/fileIO.css" /> 
 		<link rel="stylesheet" type="text/css" href="res/tab.css" />
 		<link rel="stylesheet" type="text/css" href="res/fire.css" />
 		<link rel="stylesheet" type="text/css" href="res/furnace.css" /> 
 		
 		<!-- json stuff  -->
-		<script type="text/javascript" src="constants.json"></script>
-		<script type="text/javascript" src="flags.json"></script>
-		<script type="text/javascript" src="resources.json"></script>
-		<script type="text/javascript" src="population.json"></script>
-		<script type="text/javascript" src="misc.json"></script>
-		<script type="text/javascript" src="buildings.json"></script>
-		<script type="text/javascript" src="events.json"></script>
-		<script type="text/javascript" src="science.json"></script>		
+		<script type="text/javascript" src="src/json/constants.json"></script>
+		<script type="text/javascript" src="src/json/flags.json"></script>
+		<script type="text/javascript" src="src/json/resources.json"></script>
+		<script type="text/javascript" src="src/json/population.json"></script>
+		<script type="text/javascript" src="src/json/misc.json"></script>
+		<script type="text/javascript" src="src/json/buildings.json"></script>
+		<script type="text/javascript" src="src/json/events.json"></script>
+		<script type="text/javascript" src="src/json/science.json"></script>		
 
 
 
 		<!-- javascript stuff -->
-		<script type="text/javascript" src="science.js"></script>
-		<script type="text/javascript" src="population.js"></script>
-		<script type="text/javascript" src="resources.js"></script>
-		<script type="text/javascript" src="buildings.js"></script>
-		<script type="text/javascript" src="calendar.js"></script>
-		<script type="text/javascript" src="fire.js"></script>
-		<script type="text/javascript" src="main.js"></script>
+		<script type="text/javascript" src="src/science.js"></script>
+		<script type="text/javascript" src="src/population.js"></script>
+		<script type="text/javascript" src="src/resources.js"></script>
+		<script type="text/javascript" src="src/buildings.js"></script>
+		<script type="text/javascript" src="src/calendar.js"></script>
+		<script type="text/javascript" src="src/fire.js"></script>
+		<script type="text/javascript" src="src/main.js"></script>
 
 
 		<!-- More javascript stuff, but for cookies -->
-		<script type="text/javascript" src="cookies.js"></script>
+		<script type="text/javascript" src="src/cookies.js"></script>
 
+		<!-- And even more javascript for write/reading save files -->
+		<script type="text/javascript" src="src/SaveIO.js"></script>
+		
 		<!-- jquery stuff for those sweet sweet tooltips -->
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script type="text/javascript" src="jquery_functions.js"></script>
+		<script type="text/javascript" src="src/jquery_functions.js"></script>
 
 
 		<!-- <style> -->
@@ -155,20 +159,20 @@
 
 					
 					<div id="Science" class="righttabcontent" style="display:none">
-							<div id="ResearchContent" class="Science-Content" >
-								<div id="LoreContent"   class="science_column">
-									The Old Ways
-									<hr>
-								</div>
-								<div id="AlchemyContent"  class="science_column">
-									Blood and Magic
-									<hr>
-								</div>
-								<div id="FocusContent" class="science_column">
-									An Inner Strength
-									<hr>
-								</div>
+						<div id="ResearchContent" class="Science-Content" >
+							<div id="LoreContent"   class="science_column">
+								The Old Ways
+								<hr>
 							</div>
+							<div id="AlchemyContent"  class="science_column">
+								Blood and Magic
+								<hr>
+							</div>
+							<div id="FocusContent" class="science_column">
+								An Inner Strength
+								<hr>
+							</div>
+						</div>
 					</div>
 
 					
@@ -186,12 +190,23 @@
 					</div>
 					
 					<div id="Menu" class="righttabcontent" style="display:none">
- 								<button  type="button" class="button" onclick="testCookie()">Test Cookie</button>
- 								<button  type="button" class="button" onclick="getCookies()">Get Cookies</button>								
+						<div class="button_wrapper" style="display:inline-block">
+							<button id="save-button" class="button" onclick="downloadSaveFile()"> Save Game </button>
+						</div>
+						<div class="button_wrapper" style="display:inline-block">
+							<input id="load-button" name="load-button" class="inputfile"  type="file"  onchange="readSingleFile(event)"/>
+							<label for="load-button"><br>Load Save</label>
+						</div>
+
+ 						<!-- <button  type="button" class="button" onclick="testCookie()">Test Cookie</button> -->
+ 						<!-- <button  type="button" class="button" onclick="getSaveString()">Get Cookies</button> -->
+						<!-- <div id='file-content' >   </div> -->
 					</div>
 
+
+
 				</div>	
-				
+
 			</div>
 
 
