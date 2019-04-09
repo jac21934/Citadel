@@ -39,7 +39,7 @@ var resources = {
 		},
 		"wood" : {
 				"value" : 0,
-				"resourceCap" : 100,
+				"resourceCap" : 500,
 				"rate" : {},
 				"rateUnits" : "s",
 				"discovered" : "FALSE",
@@ -57,6 +57,28 @@ var resources = {
 				},
 
 		},
+		"stone" : {
+				"value" : 0,
+				"resourceCap" : 500,
+				"rate" : {},
+				"rateUnits" : "s",
+				"discovered" : "FALSE",
+				"unlockReqs" :{
+						"resources" : {
+								"stone" : 0.001
+						},
+						"buildings" : {
+
+						},
+						"population" : {
+
+						}
+
+				},
+
+		},
+
+		
 		"lore" : {
 				"value" : 0,
 				"resourceCap" : Number.POSITIVE_INFINITY,

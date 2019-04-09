@@ -10,7 +10,7 @@ function addToResource(key, amount){
 
 
 function manageResources(timeSteps){
-		timeStepsToSeconds = timeSteps/1000;
+		timeStepsToSeconds = timeSteps * CONVERT_FROM_MS_TO_S;
 		
 		
 		for( var key in resources){
@@ -43,22 +43,21 @@ function calcRateValue(key){
 								continue;
 						}
 				}
-														toAdd += resources[key]["rate"][newKey];
+				toAdd += resources[key]["rate"][newKey];
 		}
-				
-				resources[key]["rateValue"] = toAdd;
+		resources[key]["rateValue"] = toAdd;
 
 }
 
 
-function addToResourceRate(resourceKey, buildingKey, rate){
+function addToResourceRate(resourceKey, newKey, rate){
 
 		resObj = resources[resourceKey];
-		if( !(buildingKey in resObj["rate"]) ){
-				resObj["rate"][buildingKey] = rate;
+		if( !(newKey in resObj["rate"]) ){
+				resObj["rate"][newKey] = rate;
 		}
 		else{
-				resObj["rate"][buildingKey] += rate;
+				resObj["rate"][newKey] += rate;
 		}
 		calcRateValue(resourceKey);
 }

@@ -1,0 +1,42 @@
+flags = {
+		//intro flags
+		"lookAround" : false,
+
+
+		//exploration flags
+		"Exploring_Failed" : false,
+		"Mine_Discovered": false,
+		"Overlook_Discovered": false,
+		
+
+
+		//fire flags
+		"fireOn" : false,
+
+		// Clicked tab flags
+        // Left Tabs
+		"ResourcesClicked" : true,
+		"PopulationClicked" : false,
+		
+	 	
+		
+		    //Right Tabs
+		"BaseClicked" : true,
+		"BuildingsClicked" : false,
+		"PopulationClicked" : false,
+		"JobsClicked" : false,
+		"ScienceClicked" : false,
+		"LogClicked" : false,
+
+
+		//Which tabs are shown
+		"displayPop" : false,
+		"displayBuildings" : false,
+		"displayScience"  : false, 
+
+		//specific science stuff shown:
+		"displayLore" : false,
+		"displayAlchemy" : false,
+		"displayFocus" : false,
+		
+}

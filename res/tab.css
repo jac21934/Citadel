@@ -3,6 +3,8 @@
     border: 1px solid #f1f1f1;
     background-color: #ccc;
 		padding: nose;
+		display:flex;
+		flex-direction:row;
 }
 
 /* Style the buttons inside the tab */

@@ -1,8 +1,6 @@
+var currentEvents;
 
-var changedTab = false;
 
-var displayPop = false;
-var displayBuildings = false;
 var category = {
 		"resources" : resources,
 		"buildings" : buildings,
@@ -12,13 +10,14 @@ var category = {
 };
 
 
-var currentEvent = "none";
-
 
 function clamp(num, min, max){
 		return Math.min(Math.max(num, min), max);
 }
 
+function randomInteger(min,max){
+		return Math.floor(Math.random() * (max - min) + min );
+}
 
 
 
@@ -69,6 +68,78 @@ function furnaceButton(key, value){
 		
 }
 
+
+function exploreButton(){
+		var rollTheDice = Math.random();
+		var rollFailed = true;
+		closeEvent("ExploringFailed");
+
+		//Check discoveries in order
+		if(!flags["Mine_Discovered"]){
+				if( rollTheDice < MINE_DISCOVER_CHANCE){
+						flags["Mine_Discovered"] = true;
+						rollFailed = false;		
+				}
+		}
+		else if(!flags["Overlook_Discovered"]){
+				if( rollTheDice < OVERLOOK_DISCOVER_CHANCE){
+						flags["Overlook_Discovered"] = true;
+						rollFailed = false;
+				}
+		}
+
+		
+		if(rollFailed){
+
+				flags["Exploring_Failed"] = true;
+		}
+		else{
+
+				flags["Exploring_Failed"] = false;
+		}
+
+
+		for(var i = 0; i < currentEvents.length; i++){
+				
+				if(currentEvents[i].includes("Explore")){
+						closeEvent(key);
+				}
+		}
+
+		manageEvents();
+				
+}
+
+
+function closeEvent(key){
+		//remove event correctly
+		
+
+		if(!(currentEvents.includes(key))){
+				return;
+		}
+		
+		removeMessage(key);
+		var buffEvents = [];
+		for(var i = 0; i < currentEvents.length; i++){
+				if (currentEvents[i] != key){
+						buffEvents.push(currentEvents[i]);
+				}
+		}
+		currentEvents = buffEvents;
+
+		events[key]["shown"] = "TRUE";
+
+		if(events[key]["repeatable"] == "TRUE"){
+				events[key]["shown"] = "FALSE";
+				events[key]["discovered"] = "FALSE";
+				for(var flag in events[key]["unlockBools"]){
+						flags[flag] = false;
+				}
+		}
+		
+}
+
 function disableFurnace(key){
 
 		var barID = key + "BarID";
@@ -105,7 +176,6 @@ function manageUnlocks(){
 														break;
 												}
 												else{
-														// console.log( su + " " +  category[reqClass][subReq]["value"] + " " +  category[thing][object]["unlockReqs"][reqClass][subReq]){  
 														if(	(category[reqClass][subReq]["discovered"] == "FALSE"
 																 && subReq != object) 
 																|| category[reqClass][subReq]["value"] < category[thing][object]["unlockReqs"][reqClass][subReq]){
@@ -163,10 +233,14 @@ function switchRightTabs(evt, tabName){
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
 
+
     }
     document.getElementById(tabName).style.display = "block";
+		
     evt.currentTarget.className += " active";
+		
 		flags[flagName] = true;
+
 
 }
 
@@ -198,57 +272,151 @@ function switchLeftTabs(evt, tabName){
 
 
 
+function removeMessage(id){
+		id += "Message";
+		
+		var messages = document.getElementsByClassName("message");
+		
+		var messageCounter = 0;
+		
+		for( var i = 0; i < messages.length; i++){
+				if(messages[i].id == id){
+						updateLog(messages[i].innerHTML);
+						document.getElementById("MessageBox").removeChild(messages[i]);
+//						break;
 
-function manageEvents(){
-
-		if(currentEvent == "none"){
-
-				for(var key in events){
-						if(events[key]["discovered"] == "TRUE"
-							 && events[key]["shown"] == "FALSE"
-							){
-								currentEvent = events[key];
-								updateLog(document.getElementById("MessageBox").innerHTML);
-								document.getElementById("MessageBox").innerHTML = currentEvent["message"];
-								currentEvent.misc();
-						}
 				}
 		}
-		else{
+
+		var messages = document.getElementsByClassName("message");
+
+		if(messages.length == 0){
+
+				addDefaultMessage();
+		}
+
+}
+
+
+function addMessage(message, id){
+		//		console.log(document.getElementById("MessageBox").childNodes);
+
+		if(id == "default"){
+				console.log("ERROR: id = \"default\" is reserved.");
+				return;
+		}
+		
+		
+		
+		id += "Message";
+		document.getElementById("MessageBox").innerHTML += "<p class=\'message\' id=\'" + id + "\'>" +  message + "</p>";		
+
+		var defaultMessageBox = document.getElementById("defaultMessage");
+		if(typeof(defaultMessageBox) != "undefined"){
+				removeDefaultMessage();
+		}
+
+		
+
+
+}
+
+function addDefaultMessage(){
+		document.getElementById("MessageBox").innerHTML = "<p class=\'message\' id=\'defaultMessage\'>" +  getDefaultMessage() + "</p>" + 	document.getElementById("MessageBox").innerHTML ;		
+}
+
+function removeDefaultMessage(){
+
+		if(document.getElementById("defaultMessage") != null){
+				updateLog(document.getElementById("defaultMessage").innerHTML);
+				
+				document.getElementById("MessageBox").removeChild(document.getElementById("defaultMessage"));
+		}
+		
+}
+
+
+function checkForNewEvents(){
+		for(var key in events){
+				
+				if(events[key]["discovered"] == "TRUE"
+					 && events[key]["shown"] == "FALSE"
+					 && !(currentEvents.includes(key))
+					){
+						currentEvents.push(key);
+						events[key].misc();
+						addMessage(events[key]["message"], key);
+				}
+		}
+		
+}
+
+function checkCurrentEvents(){
+		for( var i = 0; i < currentEvents.length; i++){
+				key =  currentEvents[i];
 				var shown = "TRUE";
-				for(var reqClass in currentEvent["shownReqs"]){
-						for( var subReq in currentEvent["shownReqs"][reqClass]){
+				for( var reqClass in events[key]["shownReqs"]){
+						for( var subReq in events[key]["shownReqs"][reqClass]){
 								if(	category[reqClass][subReq]["discovered"] == "FALSE" ||
-										category[reqClass][subReq]["value"] < currentEvent["shownReqs"][reqClass][subReq]){
+										category[reqClass][subReq]["value"] < events[key]["shownReqs"][reqClass][subReq]){
 										shown  = "FALSE";
 										break;
 								}
-								
+						}
+						if( shown == "FALSE"){
+								break;
 						}
 				}
-
-				for(var reqBool in currentEvent["shownBools"]){
-						if( flags[reqBool] != currentEvent["shownBools"][reqBool]){
-								shown = "FALSE";
-								break;								
+				if( shown == "TRUE"){
+						for( var reqBool  in events[key]["shownBools"]){
+								if( flags[reqBool] != events[key]["shownBools"][reqBool]){
+										shown = "FALSE";
+										break;								
+								}
 						}
-							
 				}
+				events[key]["shown"] = shown;
 
-				currentEvent["shown"] = shown;
-				if(shown == "TRUE"){
-						var message = getDefaultMessage();
-						updateLog(document.getElementById("MessageBox").innerHTML);
-						document.getElementById("MessageBox").innerHTML = message;
-						currentEvent = "none";
-						
+				if(events[key]["shown"] == "TRUE"){
+
+						closeEvent(key);
 				}
+				
+		}
+
+}
+
+function manageEvents(){
+		
+		//handle activating new events
+		checkForNewEvents();
+
+		//handle removing old events
+		checkCurrentEvents();
+		
+}
+
+
+
+
+function getDefaultMessage(){
+		var message = "";
+
+		if(events["litAFire"]["discovered"] == "TRUE"){
+				message = "You stand in a small campsite.";
+		}
+		else{
+				message = "You stand in a small clearing.";
+		}
+
+		if(flags["fireOn"]){
+				message += " A small campfire burns nearby.";
+				
 
 		}
-}
-function getDefaultMessage(){
 
-		return "You stand in a small clearing.";
+		
+		return message; 
 
 }
 
@@ -272,35 +440,45 @@ function updateLog(message){
 }
 
 
+function loadGame(){
+		currentEvents = new Array(0);
 
-function mainLoop() {
+		for(var key in resources){
+				calcRateValue(key);
+		}
+		
+		requestAnimationFrame(mainLoop);
 
-		var timestep = 10;  // actual number of miliseconds the function repeats in
-		var gameTimeRate = 2.5; // the rate at which ingame time flows, 2.5 felt right, might change later...
+}
+
+
+var oldTimeStamp = 0;
+
+function mainLoop(timeStamp) {
+
+		var timestep = timeStamp - oldTimeStamp;
+		var gameTimeRate = 0.1; // the rate at which ingame time flows, 2.5 felt right, might change later...		
+
 		manageUnlocks();
 
 		
 		displayResources();
 		displayPopulation();
-
+		displayScience();
 		
-		manageDate(gameTimeRate);
-
-		
+		manageDate(gameTimeRate, timestep);
 		manageResources(timestep);
 		
 		manageBuildingButtons();
 		manageEvents();
 		manageFire();
 
+		
 
 		managePopulation(timestep);
-		
-		
-
-		
 		manageBuildingConsumption(timestep);
-		window.setTimeout("mainLoop()", timestep);
 
-		changedTab = false;
+		oldTimeStamp = timeStamp;
+		requestAnimationFrame(mainLoop);
+		
 }

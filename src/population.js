@@ -3,9 +3,9 @@ function managePopulation(timeStep){
 		// check needs, kill if not enough food
 		// recruit if possible
 
-		rate = timeStep / 1000;
+		rate = timeStep * CONVERT_FROM_MS_TO_S;
 
-		var humanChance =  1.0;
+		var humanChance =  HUMAN_FIRE_CHANCE;
 
 		humanChance *= rate;
 		
@@ -23,9 +23,23 @@ function managePopulation(timeStep){
 
 
 		for(var key in population){
+
+
+				
+
+
+				
 				if( population[key]["discovered"] == "TRUE"
 						&& population[key]["resourceCap"] > 0
 					){
+
+						if(population[key]["value"] > 0){
+								checkPopNeeds(key);
+						}
+
+						
+
+						// Update needs appropriately
 						var popValID = key + "ValueID";
 						var popCapID = key + "CapID";
 						var valBuff = document.getElementById(popValID);
@@ -44,9 +58,19 @@ function managePopulation(timeStep){
 				}
 		}
 
+
+
+
+		
 }
 
+function checkPopNeeds(popKey){
 
+		var killMe = false;
+		for(var needKey in population[popKey]["needs"] ){				
+
+		}
+}
 
 
 function increasePop(popKey, amount){
@@ -61,10 +85,21 @@ function increasePop(popKey, amount){
 		if(population[popKey]["value"] >= population[popKey]["resourceCap"]){
 				return did_i_increase;
 		}
+		
 		else{
+				var oldPop = population[popKey]["value"];
 				var increaseVal = population[popKey]["value"] + amount;
 				population[popKey]["value"] = clamp(increaseVal, 0, population[popKey]["resourceCap"]);
+				var increaseAmount = population[popKey]["value"] - oldPop;
+
+				for( var resourceKey in population[popKey]["needs"]){
+						var rate = -1 * increaseAmount * population[popKey]["needs"][resourceKey];
+						
+						addToResourceRate(resourceKey, popKey, rate);
+				}
+				
 				did_i_increase = true;
+				
 		}
 
 		return did_i_increase;
@@ -75,7 +110,7 @@ function increasePop(popKey, amount){
 
 function displayPopulation(){
 		var text = "";
-		if(!displayPop){
+		if(!flags["displayPop"]){
 				var numPop = 0;
 				for( var key in population){
 						if(population[key]["discovered"] == "TRUE"){
@@ -83,7 +118,7 @@ function displayPopulation(){
 						}
 				}
 				if(numPop > 0){
-						displayPop = true;
+						flags["displayPop"] = true;
 						document.getElementById("ResourcesButton").style.width = "50%";
 						document.getElementById("PopulationButton").style.display = "block";
 						document.getElementById("PopulationButton").style.width = "50%";

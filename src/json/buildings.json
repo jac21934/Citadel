@@ -15,16 +15,16 @@ var buildings = {
 						},								
 				},
 				"cost" : {
-						"wood" : 50,
+						"wood" : 75,
 				},
 				process : function(){
 						var farmNumber = buildings["farm"]["value"];
-						return 50; //Math.floor(50 *Math.pow(1.5, farmNumber));
+						return Math.floor(75 *Math.pow(1.1, farmNumber) + 10);
 				},
 				
 				"unlockReqs" :{
 						"resources" : {
-								"wood": 25
+								"wood": 0.01
 						},
 						"buildings" : {
 
@@ -45,16 +45,16 @@ var buildings = {
 				"disabled": "FALSE",
 				"amount_active" : 0,
 				"resourceCapIncrease" : {
-						"wood" : 50
+						"wood" : 250
 				},
 				"cost" : {
-						"wood" : 50,
+						"wood" : 100,
 				},
 				
 				process : function(){
 						var shedNumber = buildings["shed"]["value"];
 						
-						return Math.floor(50 *Math.pow(1.5, shedNumber));
+						return Math.floor(250 * Math.pow(1.2, shedNumber));
 				},
 
 				"unlockReqs" :{
@@ -86,7 +86,7 @@ var buildings = {
 				process : function(){
 						var cabinNumber = buildings["cabin"]["value"];
 						
-						return Math.floor(100 *Math.pow(1.5, cabinNumber));
+						return Math.floor(100 * Math.pow(2, cabinNumber));
 				},
 
 				"unlockReqs" :{
@@ -94,6 +94,7 @@ var buildings = {
 								"wood": 50
 						},
 						"buildings" : {
+								"farm" : 1
 
 						},
 						"population" : {

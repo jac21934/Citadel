@@ -1,0 +1,15 @@
+var MINE_DISCOVER_CHANCE = 0.50;
+var OVERLOOK_DISCOVER_CHANCE = 0.10;
+
+//calender constants
+var DAYS_IN_MONTH = 25;
+
+
+
+//population constants
+var HUMAN_FIRE_CHANCE = 0.01;
+
+
+//misc constants
+var CONVERT_FROM_MS_TO_S = 0.001;
+var MS_IN_TEN_YEARS = 315360000000;

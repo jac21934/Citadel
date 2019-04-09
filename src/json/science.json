@@ -1,0 +1,35 @@
+science = {
+		"Silos": {
+				"message" : "The land is fertile here, but all the excess grain spoils in the sun. Maybe we could build something to store it in.",
+				"discovered" : "FALSE",
+				"repeatable" : "FALSE",
+				"resourceCap": 1,
+				"cost" : {
+						"food" : 100,
+				},
+
+				"unlockReqs" :{
+						"resources" : {
+								//nothing
+						},
+						"buildings" : {
+								//nothing
+						},
+						"population" : {
+								//nothing
+						},
+						
+				},
+				"unlockBools" :{
+						//none
+
+				},
+				
+		},
+
+
+
+
+
+
+}
