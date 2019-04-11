@@ -20,12 +20,15 @@ function addBuilding(key){
 		if(buildings[key]["disabled"] != "TRUE"){
 				if( "rateIncrease" in buildings[key]){
 						for( var newKey in buildings[key]["rateIncrease"]){
+								console.log(key + " " + newKey);
 								addToResourceRate(newKey, key, buildings[key]["rateIncrease"][newKey]["value"]);
 						}
 				}
 
 				if( "consumes" in buildings[key]){
+
 						for( var newKey in buildings[key]["consumes"]){
+								console.log(key + " " + newKey);
 								addToResourceRate(newKey, key, -1 * buildings[key]["consumes"][newKey]["value"]);
 								
 						}
@@ -237,7 +240,7 @@ function getConsumingBuildingText(key){
 		text += '	<button class=\"right_button\" onclick=\"furnaceButton(\'' + key + '\', 1)\">+</button>';
 		text += '	<div id=\"testFurnaceBar\" class=\"furnaceBar \"  style=\"overflow:hidden;text-align:center;position:relative\">';
 		text += '	  <div id=\"' + barID + '\" class=\"furnaceProgress\">  </div>';
-		text += '	  <div style=\"position:absolute;display:inline-block\">Hello </div>';
+		text += '	  <div style=\"position:absolute;display:inline-block\"> </div>';
 		text += ' </div>';
 		text += '</div>';
 
@@ -252,19 +255,34 @@ function getConsumingBuildingText(key){
 }
 
 
+function resetBuildingButtons(){
+
+		for( var building in buildingButtons){
+
+				
+
+		}
+
+}
+
 function manageBuildingButtons(){
  		var text = "";
 
-
+		if(flags["displayBuildings"] &&
+			 document.getElementById("BuildingsButton").style.display != "block"
+			){
+				document.getElementById("BuildingsButton").style.display = "block";
+		}
+		
 		for (var key in buildings){
 				if(buildings[key]["discovered"] == "TRUE"
 					 && !buildingButtons.includes(key)
 					){
-						if(!flags["displayBuildings"]){
-								document.getElementById("BuildingsButton").style = "block";
-								flags["displayBuildings"] = true;
+						// if(!flags["displayBuildings"]){
+						// 		// document.getElementById("BuildingsButton").style = "block";
+						// 		flags["displayBuildings"] = true;
 
-						}
+						// }
 						buildingButtons.push(key);
 						if( "consumes" in buildings[key]){
 								text += getConsumingBuildingText(key);

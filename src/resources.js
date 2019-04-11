@@ -43,6 +43,7 @@ function calcRateValue(key){
 								continue;
 						}
 				}
+				// console.log(key);
 				toAdd += resources[key]["rate"][newKey];
 		}
 		resources[key]["rateValue"] = toAdd;

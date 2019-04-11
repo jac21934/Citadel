@@ -123,6 +123,7 @@ var events = {
 				},
 				"unlockReqs" :{
 						"resources" : {
+								"wood" : 1,
 						},
 						"buildings" : {
 	//							"cabin" : 1
@@ -132,7 +133,7 @@ var events = {
 						
 				},
 				"unlockBools" :{
-						"displayBuildings": true,
+					
 				},
 				"shownBools" : {
 						"BuildingsClicked" : true,
@@ -141,7 +142,8 @@ var events = {
 				
 
 				misc: function(){
-
+						flags["displayBuildings"] = true;
+						
 				}
 				
 				
@@ -187,7 +189,7 @@ var events = {
 				
 
 				misc: function(){
-						document.getElementById("BaseButton").innerHTML = "A Small Campsite"
+						document.getElementById("BaseButton").innerHTML = "A Small Campsite";
 
 				}
 				
@@ -290,9 +292,13 @@ var events = {
 						var messages = [
 								"You wander around the forest for a few hours, but don't find anything.",
 								"You walk through the mountainside for a while and take in the sights.",
-								"You found the remains of an old battlefield out in the foothills of the mountains.",
+								"You find the remains of an old battlefield out in the foothills of the mountains.",
+								"You spend the afternoon walking through the broken foundations of an old village, overgrown with weeds and vines.",
+								"You follow an animal trail trail for hours, but never find anything.",
+								"You find an empty campsite with a freshly doused fire.",
 								
-								"You found a meadow of catnip out in the forest.",
+								
+								"You find a meadow of catnip out in the forest.",
 						];
 
 

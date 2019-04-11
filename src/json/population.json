@@ -4,6 +4,7 @@ var population = {
 				"plural" : "humans",
 				"value" : 0,
 				"resourceCap" : 0,
+				"defaultResourceCap" : 0,
 				"discovered": "FALSE",
 				"needs"  : {
 						"food" : 1
@@ -26,6 +27,7 @@ var population = {
 				"plural" : "dwarves",
 				"value" : 0,
 				"resourceCap" : 1,
+				"defaultResourceCap" : 1,
 				"discovered": "FALSE",
 				"needs"  : {
 						"beer" : 1,

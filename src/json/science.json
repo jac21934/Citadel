@@ -4,6 +4,7 @@ science = {
 				"discovered" : "FALSE",
 				"repeatable" : "FALSE",
 				"resourceCap": 1,
+				"defaultResourceCap": 1,
 				"cost" : {
 						"food" : 100,
 				},

@@ -17,9 +17,7 @@ flags = {
         // Left Tabs
 		"ResourcesClicked" : true,
 		"PopulationClicked" : false,
-		
-	 	
-		
+	 			
 		    //Right Tabs
 		"BaseClicked" : true,
 		"BuildingsClicked" : false,

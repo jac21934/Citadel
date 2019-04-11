@@ -1,0 +1,24 @@
+
+
+* Buildings
+
+* Population
+
+* Research
+** Lore
+Research focusing on recovering old technology. This is mostly manifested through unlocking "normal" buildings and bonuses.
+*** Research Unlocks
+**** TODO Brewing
+Unlocks brewery.
+
+** Alchemy
+Research focusing on alchemic rituals and blood magic. Not sure how this will work.
+
+** Focus
+Research that focuses on meditation and the spiritual evolution of the "main character". This is manifested through time speed-up upgrades as the main character gets better and better at meditation
+
+*** Research Unlocks
+**** TODO Deep Breathing
+Unlock first speed upgrade. Button to increase time flow appears in between year and month/day.
+
+Affects: Timeflow increase by 2? 5?

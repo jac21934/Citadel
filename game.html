@@ -32,8 +32,10 @@
 		<script type="text/javascript" src="src/buildings.js"></script>
 		<script type="text/javascript" src="src/calendar.js"></script>
 		<script type="text/javascript" src="src/fire.js"></script>
+		<script type="text/javascript" src="src/reset.js"></script>
 		<script type="text/javascript" src="src/main.js"></script>
 
+		
 
 		<!-- More javascript stuff, but for cookies -->
 		<script type="text/javascript" src="src/cookies.js"></script>
@@ -194,9 +196,15 @@
 							<button id="save-button" class="button" onclick="downloadSaveFile()"> Save Game </button>
 						</div>
 						<div class="button_wrapper" style="display:inline-block">
-							<input id="load-button" name="load-button" class="inputfile"  type="file"  onchange="readSingleFile(event)"/>
+							<input id="load-button" name="load-button" class="inputfile"  type="file"  onchange="loadFile(event)"/>
 							<label for="load-button"><br>Load Save</label>
 						</div>
+						<div class="button_wrapper" style="display:inline-block">
+							<button id="reset-button" class="button" onclick="resetAll()"> Reset Game </button>
+						</div>
+						<!-- <div class="button_wrapper" style="display:inline-block"> -->
+						<!-- 	<button id="test-button" class="button" onclick="testFunction()"> Test </button> -->
+						<!-- </div> -->
 
  						<!-- <button  type="button" class="button" onclick="testCookie()">Test Cookie</button> -->
  						<!-- <button  type="button" class="button" onclick="getSaveString()">Get Cookies</button> -->

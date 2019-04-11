@@ -11,12 +11,27 @@ var category = {
 
 
 
+function testFunction(){
+
+		resources["wood"]["rateValue"] = 0;
+
+}
+
 function clamp(num, min, max){
 		return Math.min(Math.max(num, min), max);
 }
 
 function randomInteger(min,max){
 		return Math.floor(Math.random() * (max - min) + min );
+}
+
+
+function keyCheckAndSet(obj, toCheck, toSet){
+
+		if( toCheck in obj){
+				obj[toCheck] = toSet;
+		}
+		
 }
 
 
@@ -35,7 +50,6 @@ function getActiveFurnaceFraction(key){
 function lookAround(){
 
 		flags["lookAround"] = true;
-
 
 }
 
@@ -107,7 +121,7 @@ function exploreButton(){
 		}
 
 		manageEvents();
-				
+		
 }
 
 
@@ -283,7 +297,7 @@ function removeMessage(id){
 				if(messages[i].id == id){
 						updateLog(messages[i].innerHTML);
 						document.getElementById("MessageBox").removeChild(messages[i]);
-//						break;
+						//						break;
 
 				}
 		}
@@ -420,7 +434,26 @@ function getDefaultMessage(){
 
 }
 
+function wipeMessage(){
 
+		document.getElementById("MessageBox").innerHTML = "<p id=\"defaultMessage\"> It's been a long time since you started wandering. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east.</p>";
+		
+
+
+}
+
+function wipeLog(){
+
+		document.getElementById("LogContent").innerHTML = "\n";
+
+
+}
+
+function wipeEvents(){
+
+		currentEvents = new Array(0);
+
+}
 
 function updateLog(message){
 
@@ -443,6 +476,7 @@ function updateLog(message){
 function loadGame(){
 		currentEvents = new Array(0);
 
+		
 		for(var key in resources){
 				calcRateValue(key);
 		}
@@ -462,6 +496,8 @@ function mainLoop(timeStamp) {
 		manageUnlocks();
 
 		
+		console.log(resources["wood"]["rate"]);
+						
 		displayResources();
 		displayPopulation();
 		displayScience();
