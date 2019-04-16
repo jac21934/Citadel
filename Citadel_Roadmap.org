@@ -5,11 +5,6 @@
 ** Science
 ** Save/Loading
 ** Cookies
-
-
-
-
-
 * Buildings
 
 * Population
@@ -32,3 +27,5 @@ Research that focuses on meditation and the spiritual evolution of the "main cha
 Unlock first speed upgrade. Button to increase time flow appears in between year and month/day.
 
 Affects: Timeflow increase by 2? 5?
+**** TODO Inner Peace
+ Highlest level unlock for time management.

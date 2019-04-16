@@ -1,4 +1,3 @@
-
 var fireOn = false;
 var fireUnlocked = false;
 

@@ -554,6 +554,9 @@ function mainLoop(timeStamp) {
 		managePopulation(timestep);
 		manageBuildingConsumption(timestep);
 
+		manageCookies();
+		
+		
 		oldTimeStamp = timeStamp;
 		requestAnimationFrame(mainLoop);
 		
