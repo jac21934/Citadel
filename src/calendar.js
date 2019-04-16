@@ -1,52 +1,5 @@
-
-
-
-
 var day = 0;
 var year = 0;
-
-function manageDate(rate, timeStep){
-		rate *= timeStep;
-		var DAYS_IN_YEAR = DAYS_IN_MONTH * months.length;
-		rate *= CONVERT_FROM_MS_TO_S;
-		day += rate;
-		if(	day > DAYS_IN_YEAR){ 
-				
-				year += 1;
-				day = day % DAYS_IN_YEAR;
-		}
-		var month = getMonth(); 
-		var dateText = "<tr>";
-		dateText += "<td style=\"text-align:left\">";
-		dateText += "Year " + year;
-		dateText += "</td>";
-		
-		dateText += "<td style=\"text-align:right\">";
-		dateText += month + " " +  getDay();
-		dateText += "</td>";
-
-
-		dateText += "</tr>";
-		
-
-		
-		document.getElementById("DateTable").innerHTML = dateText;
-		
-}
-
-function getYear(){
-
-		return year;
-}
-
-function getMonth() {
-		return		months[Math.floor(day/DAYS_IN_MONTH)];
-}
-
-function getDay(){
-
-		return ( Math.floor(day) % DAYS_IN_MONTH + 1);
-}
 
 var months = [
 		"Ossuary",
@@ -62,4 +15,49 @@ var months = [
 		"Ira",
 		"Lacrima",
 		"Pyre"
-]
+];
+
+
+function manageDate(rate, timeStep){
+		rate *= timeStep;
+		var DAYS_IN_YEAR = DAYS_IN_MONTH * months.length;
+		rate *= CONVERT_FROM_MS_TO_S;
+		time["day"] += rate;
+		if(	time["day"] > DAYS_IN_YEAR){ 
+				
+				time["year"] += 1;
+				time["day"] = time["day"] % DAYS_IN_YEAR;
+		}
+		var month = getMonth(); 
+		var dateText = "<tr>";
+		dateText += "<td style=\"text-align:left\">";
+		dateText += "Year " + time["year"];
+		dateText += "</td>";
+		
+		dateText += "<td style=\"text-align:right\">";
+		dateText += month + " " +  getDay();
+		dateText += "</td>";
+
+
+		dateText += "</tr>";
+		
+
+		document.getElementById("DateTable").innerHTML = dateText;
+		
+}
+
+function getYear(){
+
+		return time["year"];
+}
+
+function getMonth() {
+		return		months[Math.floor(time["day"]/DAYS_IN_MONTH)];
+}
+
+function getDay(){
+
+		return ( Math.floor(time["day"]) % DAYS_IN_MONTH + 1);
+}
+
+

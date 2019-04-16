@@ -20,7 +20,7 @@ function addBuilding(key){
 		if(buildings[key]["disabled"] != "TRUE"){
 				if( "rateIncrease" in buildings[key]){
 						for( var newKey in buildings[key]["rateIncrease"]){
-								console.log(key + " " + newKey);
+								// console.log(key + " " + newKey);
 								addToResourceRate(newKey, key, buildings[key]["rateIncrease"][newKey]["value"]);
 						}
 				}
@@ -28,7 +28,7 @@ function addBuilding(key){
 				if( "consumes" in buildings[key]){
 
 						for( var newKey in buildings[key]["consumes"]){
-								console.log(key + " " + newKey);
+								// console.log(key + " " + newKey);
 								addToResourceRate(newKey, key, -1 * buildings[key]["consumes"][newKey]["value"]);
 								
 						}
@@ -53,12 +53,24 @@ function addBuilding(key){
 				}
 		}
 
+		refreshBuildingText(key);
+		
+		// document.getElementById(key).innerHTML = getNameText(key);
+
+		// var keyID = key + "ID";
+
+		// document.getElementById(keyID).title = getDescriptionText("buildings", key);
+
+		
+}
+
+
+function refreshBuildingText(key){
 		document.getElementById(key).innerHTML = getNameText(key);
-
+		
 		var keyID = key + "ID";
-
+		
 		document.getElementById(keyID).title = getDescriptionText("buildings", key);
-
 		
 }
 
@@ -66,11 +78,13 @@ function buildingButton(key){
 
 
 
- 		for( var newKey in buildings[key]["cost"]){
-				resources[newKey]["value"] -= buildings[key]["cost"][newKey];
-				buildings[key]["cost"][newKey] = buildings[key].process();
-		}
+ 		// for( var newKey in buildings[key]["cost"]){
+		// 		resources[newKey]["value"] -= buildings[key]["cost"][newKey];
+		// 		buildings[key]["cost"][newKey] = buildings[key].process();
+		// }
 
+
+		buyBuilding(key);
 
 		addBuilding(key);
 
@@ -78,13 +92,27 @@ function buildingButton(key){
 		
 }
 
+function buyBuilding(key){
+		for( var newKey in buildings[key]["cost"]){
+				resources[newKey]["value"] -= buildings[key]["cost"][newKey];
+				buildings[key]["cost"][newKey] = buildings[key].process(buildings[key]["value"]);
+		}
+}
+
+
+function calcBuildingCost(key){
+				for( var newKey in buildings[key]["cost"]){
+						buildings[key]["cost"][newKey] = buildings[key].process(buildings[key]["value"] -  1);
+		}
+}
 
 function getNameText(key){
 
 		var nameText = key.replace(/^\w/, c => c.toUpperCase());
 		
 		var number = buildings[key]["value"];
-		
+
+		if( number > 0){
 		nameText += ' (';
 		
 		if("consumes" in buildings[key]){
@@ -93,7 +121,7 @@ function getNameText(key){
 		}
 		
 		nameText += number + ')';
-
+		}
 		
 		
 		return nameText;
@@ -203,7 +231,8 @@ function getNormalBuildingText(key){
 		text += " style='pointer-events: none;'";
 		text += " disabled";
 		text +=">";
-		text += key.replace(/^\w/, c => c.toUpperCase());
+		// text += key.replace(/^\w/, c => c.toUpperCase());
+		text += getNameText(key);
 		text += '</button>';
 		text += "</div>";
 
@@ -232,16 +261,18 @@ function getConsumingBuildingText(key){
 		text += " style='pointer-events: none; height:60px;position:relative;margin:0;'";
 		text += " disabled";
 		text +=">";
-		text += key.replace(/^\w/, c => c.toUpperCase());
+		// text += key.replace(/^\w/, c => c.toUpperCase());
+		text += getNameText(key);
 		text += '</button>';
 
 		text += '<div style=\"height:20px;color:white;border-style:solid;bottom:0;left:0;right:0; background-color: #555555\">';
 		text += '	<button class=\"left_button\" onclick=\"furnaceButton(\'' +  key  +'\', -1)\" >-</button>';
 		text += '	<button class=\"right_button\" onclick=\"furnaceButton(\'' + key + '\', 1)\">+</button>';
-		text += '	<div id=\"testFurnaceBar\" class=\"furnaceBar \"  style=\"overflow:hidden;text-align:center;position:relative\">';
-		text += '	  <div id=\"' + barID + '\" class=\"furnaceProgress\">  </div>';
-		text += '	  <div style=\"position:absolute;display:inline-block\"> </div>';
-		text += ' </div>';
+		// text += '	<div id=\"testFurnaceBar\" class=\"furnaceBar \"  style=\"overflow:hidden;text-align:center;position:relative\">';
+		// text += '	  <div id=\"' + barID + '\" class=\"furnaceProgress\">  </div>';
+		// text += '	  <div style=\"position:absolute;display:inline-block\"> </div>';
+		// text += ' </div>';
+		text += getFurnaceBarText(key);
 		text += '</div>';
 
 		
@@ -249,19 +280,29 @@ function getConsumingBuildingText(key){
 
 		return text;
 
-
-
-
 }
 
+function getFurnaceBarText(key){
 
-function resetBuildingButtons(){
-
-		for( var building in buildingButtons){
-
+		var percentage = getFurnaceUsage(key);
+		var barID = key + "BarID";
+		var text = "";
+		text += '	<div id=\"testFurnaceBar\" class=\"furnaceBar \"  style=\"overflow:hidden;text-align:center;position:relative\">';
+		
+		text += '	  <div id=\"' + barID + '\" class=\"furnaceProgress\"';
+		if(buildings[key]["disabled"] == "TRUE"){
 				
+				text += ' \"furnaceDisabled\"';
 
 		}
+		text += ' style=\"width:' + percentage + '%;\">  </div>';
+
+		
+		
+		text += '	  <div style=\"position:absolute;display:inline-block;\"> </div>';
+		text += ' </div>';
+		
+		return text;
 
 }
 
@@ -302,6 +343,7 @@ function manageBuildingButtons(){
 				}
 				
 				document.getElementById("Buildings").innerHTML += text;
+
 		}
 		checkBuildingButtons();
 }
@@ -349,7 +391,7 @@ function checkBuildingCost(key){
 
 
 function disableBuildingReason(key, reason){
-		console.log(reason);
+		// console.log(reason);
 		disableBuilding(key);
 		if( reason == "consumptionLimited"){
 				buildings[key]["consumptionLimited"] = "TRUE";

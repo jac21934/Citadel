@@ -8,20 +8,27 @@ var resets = {
 		"rate" : null,
 		"resourceCap" : 1,
 		"rateValue" : 0,
+		"killTime" : 0,
 }
 
 
-
+var defaultTrueFlags = ["ResourceClicked", "BaseClicked"];
 
 function resetFlags(){
 
 		for(var flag in flags){
-				flags[flag] = false;
+				if(defaultTrueFlags.includes(flag)){
+						flags[flag] = true;
+				}
+				else{
+						flags[flag] = false;
+				}
+
 		}
 
-		//reset screen to Base and Resource tabs
-		flags["ResourceClicked"] = true;
-		flags["BaseClicked"] = true;
+		// reset screen to Base and Resource tabs
+		// flags["ResourceClicked"] = true;
+		// flags["BaseClicked"] = true;
 		
 }
 
@@ -53,6 +60,16 @@ function resetHTML(){
 		//reset text
 		document.getElementById("BaseButton").innerHTML = "A Small Clearing";
 
+		document.getElementById("populationTable").innerHTML = "";
+		document.getElementById("resourceTable").innerHTML = "";
+		document.getElementById("specialResourceTable").innerHTML = "";
+		document.getElementById("LogContent").innerHTML = "";
+
+		//reset highlighting
+		document.getElementById("LogContent").innerHTML = "";
+
+		forceSwitchLeftTabs("Resources");
+
 }
 
 
@@ -64,14 +81,45 @@ function resetBuildingButtons(){
 
 }
 
+function resetVariables(){
 
+		for( var catKey in category){
+				for( var objKey in category[catKey]){
+						
+						for( var resetKey in resets){
+								
+								//handle default resource caps
+								if( resetKey == "resourceCap"){
+										keyCheckAndSet( category[catKey][objKey], resetKey, category[catKey][objKey]["defaultResourceCap"]);
+								}
+								//handle clearing rate objects, have to do individually beacuse javascript sucks
+								else if(resetKey == "rate"){
+										for( var rateKey in category[catKey][objKey]["rate"] ){
+												
+												category[catKey][objKey]["rate"][rateKey] = 0;
+										}
+								}
+								//reseting everything else
+								else{
+										keyCheckAndSet( category[catKey][objKey], resetKey, resets[resetKey]);
+								}
+						}
+				}
+		}
+}
+ 
+
+function resetDate(){
+
+		time["day"] = 0;
+		time["year"] = 0;
+
+}
 
 function resetAll(){
 
 		//set date
-		day = 0;
-		year = 0;
-		
+		resetDate();		
 		//clean log
 		wipeLog();
 		//clean events
@@ -91,28 +139,9 @@ function resetAll(){
 		resetBuildingButtons();
 		
 		//reset all values
-		for( var catKey in category){
-				for( var objKey in category[catKey]){
-						
-						for( var resetKey in resets){
+		resetVariables();
 
-								//handle default resource caps
-								if( resetKey == "resourceCap"){
-										keyCheckAndSet( category[catKey][objKey], resetKey, category[catKey][objKey]["defaultResourceCap"]);
-								}
-								//handle clearing rate objects, have to do individually beacuse javascript sucks
-								else if(resetKey == "rate"){
-										for( var rateKey in category[catKey][objKey]["rate"] ){
 
-												category[catKey][objKey]["rate"][rateKey] = 0;
-										}
-								}
-								//reseting everything else
-								else{
-										keyCheckAndSet( category[catKey][objKey], resetKey, resets[resetKey]);
-								}
-						}
-				}
-		}
+		
 }
 

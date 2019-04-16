@@ -1,5 +1,15 @@
 
 
+* Priority Stuff
+** Population Management
+** Science
+** Save/Loading
+** Cookies
+
+
+
+
+
 * Buildings
 
 * Population

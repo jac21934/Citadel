@@ -14,6 +14,7 @@
 		<link rel="stylesheet" type="text/css" href="res/furnace.css" /> 
 		
 		<!-- json stuff  -->
+		<script type="text/javascript" src="src/json/time.json"></script>
 		<script type="text/javascript" src="src/json/constants.json"></script>
 		<script type="text/javascript" src="src/json/flags.json"></script>
 		<script type="text/javascript" src="src/json/resources.json"></script>
@@ -49,15 +50,7 @@
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script type="text/javascript" src="src/jquery_functions.js"></script>
 
-
-		<!-- <style> -->
-			<!-- 	label { -->
-			<!-- 			display: inline-block; -->
-			<!-- 			width: 5em; -->
-			<!-- 	} -->
-			<!-- </style> -->
-
-
+		
 		<title>Citadel</title>
 	</head>
 
@@ -65,7 +58,6 @@
 
 	<!-- Now for the actual page -->
 	<body onload="loadGame()"> <!-- load various variables and start the main loop -->
-		<!-- <div class="row" style="height:100%">	 -->
 
 			<!-- resources and population -->
 			
@@ -117,7 +109,7 @@
 					<div id="Base" class="righttabcontent" style="display:block">
 
 						<!-- Initial message -->
-						<div id="MessageBox" class="messagebox"> <p id="defaultMessage"> It's been a long time since you started wandering. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east.</p> </div>
+						<div id="MessageBox" class="messagebox">  </div>
 						
 						<hr>
 						<div style="width:100%">
@@ -193,7 +185,7 @@
 					
 					<div id="Menu" class="righttabcontent" style="display:none">
 						<div class="button_wrapper" style="display:inline-block">
-							<button id="save-button" class="button" onclick="downloadSaveFile()"> Save Game </button>
+							<button id="save-button" class="button" onclick="NewDownloadSaveFile()"> Save Game </button>
 						</div>
 						<div class="button_wrapper" style="display:inline-block">
 							<input id="load-button" name="load-button" class="inputfile"  type="file"  onchange="loadFile(event)"/>

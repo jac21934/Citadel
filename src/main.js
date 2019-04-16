@@ -53,10 +53,14 @@ function lookAround(){
 
 }
 
+function getFurnaceUsage(key){
+		var percentage = clamp( (getActiveFurnaceFraction(key) * 100), 0, 100);
+		return percentage;
+}
 
 function setFurnaceBar(key){
 
-		var percentage = clamp( (getActiveFurnaceFraction(key) * 100), 0, 100);
+		var percentage = getFurnaceUsage(key); // clamp( (getActiveFurnaceFraction(key) * 100), 0, 100);
 		
 		var barID = key + "BarID";
 
@@ -260,6 +264,31 @@ function switchRightTabs(evt, tabName){
 
 
 
+function forceSwitchLeftTabs(tabName){
+    var i, tabcontent, tablinks;
+		var buttonName = tabName + "Button";
+		var flagName = tabName + "Clicked";
+
+		tabcontent = document.getElementsByClassName("lefttabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+				var flag = tabcontent[i].id + "Clicked";
+				flags[flag] = false;
+				
+		}
+    tablinks = document.getElementsByClassName("lefttablinks");
+
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+				
+    }
+    document.getElementById(tabName).style.display = "block";
+
+		flags[flagName] = true;
+		
+    document.getElementById(buttonName).className += " active";
+}
+
 function switchLeftTabs(evt, tabName){
     var i, tabcontent, tablinks;
 		var flagName = tabName + "Clicked";
@@ -407,6 +436,14 @@ function manageEvents(){
 
 		//handle removing old events
 		checkCurrentEvents();
+
+		var messages = document.getElementsByClassName("message");
+
+		if(messages.length == 0){
+				
+				addDefaultMessage();
+		}
+		
 		
 }
 
@@ -416,19 +453,24 @@ function manageEvents(){
 function getDefaultMessage(){
 		var message = "";
 
-		if(events["litAFire"]["discovered"] == "TRUE"){
-				message = "You stand in a small campsite.";
+		if(!flags["lookAround"]){
+				message = "It's been a long time since you started wandering. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east.";
+
 		}
 		else{
-				message = "You stand in a small clearing.";
-		}
-
-		if(flags["fireOn"]){
-				message += " A small campfire burns nearby.";
+				if(events["litAFire"]["discovered"] == "TRUE"){
+						message = "You stand in a small campsite.";
+				}
+				else{
+						message = "You stand in a small clearing.";
+				}
 				
-
+				if(flags["fireOn"]){
+						message += " A small campfire burns nearby.";
+						
+						
+				}
 		}
-
 		
 		return message; 
 
@@ -436,7 +478,7 @@ function getDefaultMessage(){
 
 function wipeMessage(){
 
-		document.getElementById("MessageBox").innerHTML = "<p id=\"defaultMessage\"> It's been a long time since you started wandering. But your feet are tired, and this place seems nice enough. A clearing in the woods. A stream back behind you. Mountains off to the east.</p>";
+		document.getElementById("MessageBox").innerHTML = "<p id=\"defaultMessage\"> </p>";
 		
 
 
@@ -450,7 +492,7 @@ function wipeLog(){
 }
 
 function wipeEvents(){
-
+		
 		currentEvents = new Array(0);
 
 }
@@ -459,8 +501,7 @@ function updateLog(message){
 
 		var logText = "<tr>";
 
-
-		
+	
 		logText += "<td style=\"vertical-align: top;text-align:text-top\" width=\"15%\">[Year " + getYear() + ", " + getMonth() + " " + getDay() + "]</td> ";
 		logText += "<td width=\"85%\">" +  message + "</td>";
 
@@ -496,8 +537,7 @@ function mainLoop(timeStamp) {
 		manageUnlocks();
 
 		
-		console.log(resources["wood"]["rate"]);
-						
+					
 		displayResources();
 		displayPopulation();
 		displayScience();

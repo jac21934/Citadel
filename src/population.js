@@ -24,22 +24,16 @@ function managePopulation(timeStep){
 
 		for(var key in population){
 
-
-				
-
-
-				
 				if( population[key]["discovered"] == "TRUE"
 						&& population[key]["resourceCap"] > 0
 					){
-
+						// Update needs appropriately
 						if(population[key]["value"] > 0){
-								checkPopNeeds(key);
+								checkPopNeeds(key, timeStep);
 						}
 
 						
-
-						// Update needs appropriately
+						//Update value/cap if needed
 						var popValID = key + "ValueID";
 						var popCapID = key + "CapID";
 						var valBuff = document.getElementById(popValID);
@@ -64,11 +58,20 @@ function managePopulation(timeStep){
 		
 }
 
-function checkPopNeeds(popKey){
 
+
+
+function checkPopNeeds(popKey, step){
+
+		var time = oldTimeStamp + step;
 		var killMe = false;
 		for(var needKey in population[popKey]["needs"] ){				
+				
+		}
 
+		if(killMe
+			 && ( time >  population[popKey]["killTime"] + KILL_WAIT_TIME) ){
+				increasePop(popKey, -1);
 		}
 }
 

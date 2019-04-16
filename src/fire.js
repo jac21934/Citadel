@@ -47,7 +47,19 @@ function resetFire(){
 }
 
 function manageFire(){
-		fire = document.getElementById("FireButton");
+		var name = "A small campfire";
+		var fire = document.getElementById("FireButton");
+
+		if(flags["fireOn"]){
+				if(!fire.innerHTML.includes(name)){
+						fire.innerHTML = name;
+				}
+
+
+				if(!fire.className.includes("fireOn")){
+						fire.className += " fireOn";
+				}
+		}
 		
 		if(fire.disabled == true){
 				if(resources["wood"]["value"] > 0){

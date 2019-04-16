@@ -5,7 +5,6 @@ var OVERLOOK_DISCOVER_CHANCE = 0.10;
 var DAYS_IN_MONTH = 25;
 
 
-
 //population constants
 var HUMAN_FIRE_CHANCE = 0.01;
 

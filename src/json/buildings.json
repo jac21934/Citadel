@@ -17,8 +17,8 @@ var buildings = {
 				"cost" : {
 						"wood" : 75,
 				},
-				process : function(){
-						var farmNumber = buildings["farm"]["value"];
+				process : function(numVal){
+						var farmNumber  = numVal; //= buildings["farm"]["value"];
 						return Math.floor(75 *Math.pow(1.1, farmNumber) + 10);
 				},
 				
@@ -51,8 +51,8 @@ var buildings = {
 						"wood" : 100,
 				},
 				
-				process : function(){
-						var shedNumber = buildings["shed"]["value"];
+				process : function(numVal){
+						var shedNumber  = numVal; //= buildings["shed"]["value"];
 						
 						return Math.floor(250 * Math.pow(1.2, shedNumber));
 				},
@@ -83,8 +83,8 @@ var buildings = {
 						"wood" : 100,
 				},
 				
-				process : function(){
-						var cabinNumber = buildings["cabin"]["value"];
+				process : function(numVal){
+						var cabinNumber  = numVal; //= buildings["cabin"]["value"];
 						
 						return Math.floor(100 * Math.pow(2, cabinNumber));
 				},
@@ -117,8 +117,8 @@ var buildings = {
 						"wood" : 100,
 				},
 				
-				process : function(){
-						var brewNumber = buildings["brewery"]["value"];
+				process : function(numVal){
+						var brewNumber  = numVal; //= buildings["brewery"]["value"];
 						
 						return Math.floor(100 *Math.pow(1.5, brewNumber));
 				},
@@ -170,8 +170,8 @@ var buildings = {
 						"wood" : 500,
 				},
 				
-				process : function(){
-						var mineNumber = buildings["mine"]["value"];
+				process : function(numVal){
+						var mineNumber  = numVal; //= buildings["mine"]["value"];
 						
 						return Math.floor(500 * Math.pow(1.5, mineNumber));
 				},
