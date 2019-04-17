@@ -15,6 +15,9 @@ function setCookie(name, value){
 }
 
 
+
+function 
+
 function getCookies(){
 
 		var cookies = document.cookie;
@@ -24,13 +27,17 @@ function getCookies(){
 
 var cookie_set = false;
 
-function manageCookies(){
+var cookieTime = 0;
 
-		if(!cookie_set){
+function manageCookies(timeStamp){
+		console.log(timeStamp);
+		// if(timeStamp > cookieTime + MS_IN_TEN_MINUTES){
+				cookieTime = timeStamp;
 
-				testCookie();
+				setCookie("EVENTS", JSON.stringify(saveEventsJSON()));
 
-		}
 
+		// }
+
+		
 }
-

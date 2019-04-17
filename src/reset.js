@@ -118,6 +118,8 @@ function resetDate(){
 
 function resetAll(){
 
+		clearStorage();
+		
 		//set date
 		resetDate();		
 		//clean log
@@ -140,6 +142,7 @@ function resetAll(){
 		
 		//reset all values
 		resetVariables();
+
 
 
 		

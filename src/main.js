@@ -517,6 +517,12 @@ function updateLog(message){
 function loadGame(){
 		currentEvents = new Array(0);
 
+		window.addEventListener("beforeunload", function(event){ saveStorage(); });
+
+
+		if( checkStorage() ){
+				loadFromStorage();
+		}
 		
 		for(var key in resources){
 				calcRateValue(key);
@@ -554,7 +560,7 @@ function mainLoop(timeStamp) {
 		managePopulation(timestep);
 		manageBuildingConsumption(timestep);
 
-		manageCookies();
+		manageStorage(timeStamp);
 		
 		
 		oldTimeStamp = timeStamp;

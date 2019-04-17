@@ -90,7 +90,8 @@ function NewLoadSave(saveString){
 
 						switch(buffArr[0]) {
 						case "TIME":	
-								time = JSON.parse(buffArr[1]);
+								// time = JSON.parse(buffArr[1]);
+								setTimeFromJSON(JSON.parse(buffArr[1]));
 								
 								break;
 								
@@ -196,7 +197,6 @@ function saveBuildingsJSON(){
 						
 				}
 		}
-		console.log(saveBuild);
 		return saveBuild;
 }
 
@@ -218,6 +218,14 @@ function savePopulationJSON(){
 		return savePop;
 }
 
+function setTimeFromJSON(someJSON){
+		for( var timeKey in someJSON){
+				if(timeKey in time){
+						time[timeKey] = Number(someJSON[timeKey]);
+				}
+		}
+}
+
 function setFlagsFromJSON(someJSON){
 
 		for( var flagKey in someJSON){
@@ -233,8 +241,8 @@ function setBuildingsFromJSON(someJSON){
 		for( var buildKey in someJSON){
 				if(buildKey in buildings){
 						buildings[buildKey]["discovered"] = "TRUE";
-						buildings[buildKey]["value"] = someJSON[buildKey]["value"];
-						buildings[buildKey]["amount_active"] = someJSON[buildKey]["amount_active"];
+						buildings[buildKey]["value"] = Number(someJSON[buildKey]["value"]);
+						buildings[buildKey]["amount_active"] = Number(someJSON[buildKey]["amount_active"]);
 						buildings[buildKey]["disabled"] = someJSON[buildKey]["disabled"];
 						if("resourseCapLimited" in buildings[buildKey]){
 								buildings[buildKey]["resourseCapLimited"] = someJSON[buildKey]["resourseCapLimited"];
@@ -283,8 +291,8 @@ function setResourcesFromJSON(someJSON){
 		for(var resKey in someJSON){
 				if(resKey in resources){
 						resources[resKey]["discovered"] = "TRUE";
-						resources[resKey]["value"] = someJSON[resKey]["value"];
-						resources[resKey]["resourceCap"] = someJSON[resKey]["resourceCap"];
+						resources[resKey]["value"] = Number(someJSON[resKey]["value"]);
+						resources[resKey]["resourceCap"] = Number(someJSON[resKey]["resourceCap"]);
 						resources[resKey]["rate"] = someJSON[resKey]["rate"];
 				}
 		}
@@ -297,9 +305,9 @@ function setPopulationFromJSON(someJSON){
 
 				if(popKey in population){
 						population[popKey]["discovered"] = "TRUE";
-						population[popKey]["value"] = someJSON[popKey]["value"];
-						population[popKey]["resourceCap"] = someJSON[popKey]["resourceCap"];
-						population[popKey]["killTime"] = someJSON[popKey]["killTime"];
+						population[popKey]["value"] = Number(someJSON[popKey]["value"]);
+						population[popKey]["resourceCap"] = Number(someJSON[popKey]["resourceCap"]);
+						population[popKey]["killTime"] = Number(someJSON[popKey]["killTime"]);
 				}
 		}
 }
